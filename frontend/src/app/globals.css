@@ -1,0 +1,46 @@
+/* globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #1f1f1f;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+}
+
+.homepage {
+  background-color: #2B2B2B;
+  padding: 40px;
+  border-radius: 12px;
+}
+
+.upload-section {
+  background-color: #2B2B2B;
+  padding: 40px;
+  border-radius: 12px;
+}
+
+.text-white {
+  color: #fff !important;
+}
+
+.text-yellow-400 {
+  color: #F2C94C !important;
+}
+
+.bg-gray-900 {
+  background-color: #1f1f1f !important;
+}
+
+.bg-gray-800 {
+  background-color: #2B2B2B !important;
+}
+
+.text-gray-400 {
+  color: #888 !important;
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}

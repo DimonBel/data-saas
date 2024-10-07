@@ -1,0 +1,22 @@
+.file-list-container {
+    background-color: #3a3a3a; /* Darker background to contrast with lighter text */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .file-list-item {
+    color: #BFAFF2; /* Light purple color for the file names */
+    padding: 5px 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .file-list-item span {
+    color: #e5e7eb; /* Light text color */
+  }
+  
+  .file-list-item:hover {
+    background-color: #4e4e4e; /* Hover effect for better interaction */
+  }
+  

@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "enriches",
+  "info": {
+    "singularName": "enrich",
+    "pluralName": "enriches",
+    "displayName": "Enrich"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "file": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "filepath": {
+      "type": "string"
+    }
+  }
+}

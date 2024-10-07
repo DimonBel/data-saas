@@ -1,0 +1,28 @@
+const initialData = [
+  {
+    id: 1,
+    Name: "Mihaela Catan",
+    Email: "mihaela.catan@isa.utm.md",
+    Phone: "+373 062008992",
+    Role: "Machine Learning Engineer",
+    Company: "Sigmoid",
+    Department: "Tech",
+    Location: "Chișinău",
+    JoiningDate: "2021-06-29",
+    LinkedIn: "https://www.linkedin.com/in/mihaelacatan/",
+    Facebook: "https://www.facebook.com/MihaelaCatan",
+  },
+  {
+    id: 2,
+    Name: "Sabina Popescu",
+    Email: "sabina.popescu@isa.utm.md",
+    Phone: "+373 060264040",
+    Role: "Human Resources Associate",
+    Company: "Sigmoid",
+    Department: "HR",
+    Location: "Chișinău",
+    JoiningDate: "2023-10-22",
+    LinkedIn: "https://www.linkedin.com/in/sabina-popescu-8862382ba/",
+    Facebook: "https://www.facebook.com/sabina.popescu.7777",
+  },
+];

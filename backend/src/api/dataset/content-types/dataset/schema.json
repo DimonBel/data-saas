@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "datasets",
+  "info": {
+    "singularName": "dataset",
+    "pluralName": "datasets",
+    "displayName": "dataset"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "filename": {
+      "type": "string"
+    },
+    "filepath": {
+      "type": "string"
+    },
+    "data": {
+      "type": "json"
+    },
+    "columns": {
+      "type": "json"
+    },
+    "file": {
+      "allowedTypes": [
+        "files"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "uploaded": {
+      "type": "date"
+    }
+  }
+}

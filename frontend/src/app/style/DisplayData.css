@@ -1,0 +1,69 @@
+.display-data-container {
+    padding: 40px;
+    background-color: #1e1e1e;
+    min-height: 100vh;
+    overflow: hidden;
+  }
+  
+  .display-data-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #2b2b2b;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .title {
+    color: #e5e7eb; /* Lighter text color */
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+  
+  .description {
+    color: #d3d3d3;
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  
+  .selection-card {
+    background-color: #2d2d2d;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 12px;
+    border: none; /* Remove borders */
+  }
+  
+  .card-title {
+    color: #e5e7eb; /* Lighter text color */
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .radio {
+    color: #BFAFF2;
+  }
+  
+  .radio-checked {
+    color: #ffffff;
+  }
+  
+  .table-card {
+    background-color: #2d2d2d;
+    border-radius: 12px;
+    max-height: 400px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    border: none; /* Remove borders */
+  }
+  
+  .no-data {
+    color: #e5e7eb; /* Lighter text color */
+    text-align: center;
+  }
+  
+  .button-container {
+    text-align: center;
+    margin-top: 20px;
+  }
