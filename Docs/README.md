@@ -157,4 +157,4 @@ Open a PR to merge into both `main` after resolving the issue.
 * **Dmitrii Belîh** - Software Engineer
 * **Mihaela Catan** - Software Engineer
 * **Sabina Popescu** - Software Engineer
-* **Mentor**: **Vladimir Stajilov** (CTO, CyberWhale)
+* **Madalina Chirpicinic** - Software Engineer

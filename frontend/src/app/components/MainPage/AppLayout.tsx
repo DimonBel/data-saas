@@ -20,7 +20,7 @@ const AppLayout: React.FC<LayoutProps> = ({ children }) => {
     <Layout className="min-h-screen bg-gray-900 text-white flex flex-col">
       <Header className="bg-gray-800 py-4 px-8 flex justify-between items-center">
         <Link href="/">
-          <Title level={3} className="text-white">CyberWhale</Title>
+          <Title level={3} className="text-white">Data Enricher</Title>
         </Link>
         <div>
           {status === "unauthenticated" ? (
@@ -65,7 +65,7 @@ const AppLayout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </Content>
       <Footer className="bg-gray-800 py-4 px-8 text-center text-gray-400">
-        <p>&copy; {new Date().getFullYear()} CyberWhale. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} PBL Data Enricher. All rights reserved.</p>
       </Footer>
     </Layout>
   );

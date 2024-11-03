@@ -85,3 +85,18 @@ The goal of this project is to develop a SaaS application that allows users to u
 - Completeness of documentation.
 
 This project provides a comprehensive real-world experience in developing a SaaS application using modern web development practices, containerization, and CI/CD automation.
+
+
+________________________________________________________________
+
+
+To run the code follow the next steps:
+
+1. Backend: on root directory run docker with
+   docker-compose -f docker-compose.yml up backend --build
+
+2. Frontend: on frontend directory run the project with npm
+   npm install
+   npm run dev
+
+Also, don't forget to configure .env.local file and configure Strapi locally.
