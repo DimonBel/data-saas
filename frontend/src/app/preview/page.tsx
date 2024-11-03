@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react';
-import AppLayout from '../components/MainPage/AppLayout';
+import AppLayout from '../../components/MainPage/AppLayout';
 import { Typography, Button } from 'antd';
-import TogetherTable from '../components/Table/TogetherTable';
+import TogetherTable from '../../components/Table/TogetherTable';
 
 const { Title, Paragraph } = Typography;
 

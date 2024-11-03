@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Card, Avatar, Typography, List, Button, Space, message } from 'antd';
 import { UserOutlined, DownloadOutlined } from '@ant-design/icons';
-import { fetchDatasets, getFileUrl, Dataset } from '@/app/services/historyService';
+import { fetchDatasets, getFileUrl, Dataset } from '@/services/historyService';
 import { useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
 

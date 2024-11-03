@@ -1,7 +1,7 @@
 "use client"
 import type { NextPage } from 'next';
-import ProfilePage from '../components/ProfilePage/ProfilePage';
-import AppLayout from '../components/MainPage/AppLayout';
+import ProfilePage from '../../components/ProfilePage/ProfilePage';
+import AppLayout from '../../components/MainPage/AppLayout';
 
 const Profile: NextPage = () => {
   const user = {
@@ -11,7 +11,7 @@ const Profile: NextPage = () => {
 
   return (
     <AppLayout>
-      <ProfilePage user={user} />
+      <ProfilePage />
     </AppLayout>
   );
 };

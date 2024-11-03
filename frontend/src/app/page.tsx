@@ -1,5 +1,5 @@
-import AppLayout from './components/MainPage/AppLayout';
-import MainPageContent from './components/MainPage/MainPageContent';
+import AppLayout from '../components/MainPage/AppLayout';
+import MainPageContent from '../components/MainPage/MainPageContent';
 
 export default function Home() {
   return (

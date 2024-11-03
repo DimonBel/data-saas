@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { fetchData } from "@/app/services/fetchDataService";
 import { calculateTotalCost } from "@/app/services/costService";
 import "@/app/style/DisplayData.css";
-import { DataItem, ColumnItem } from "@/app/types/data";
+import { DataItem, ColumnItem } from "@/types/data";
 import { getColumns } from "@/app/utils/columns";
 import { handleEnrichment } from "@/app/utils/enrichment";
 
