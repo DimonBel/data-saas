@@ -4,10 +4,10 @@ import React, { useState } from 'react';
 import { Upload, Button, message, Form, Tag, Row, Col } from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
 import { UploadFile } from 'antd/es/upload/interface';
-import { parseFileColumnsAndData } from '@/app/services/fileService';
-import UploadService from '@/app/services/uploadService';
+import { parseFileColumnsAndData } from '@/services/fileService';
+import UploadService from '@/services/uploadService';
 import { RcFile } from 'antd/es/upload/interface';
-import "@/app/style/FileUploader.css";
+import "@/style/FileUploader.css";
 import { useRouter } from 'next/navigation';
 
 const { Dragger } = Upload;

@@ -1,8 +1,8 @@
 "use client";
 
 import React from 'react';
-import AppLayout from '../components/MainPage/AppLayout';
-import FileUploader from "@/app/components/FileUpload/FileUploader"
+import AppLayout from '../../components/MainPage/AppLayout';
+import FileUploader from "@/components/FileUpload/FileUploader"
 import { Typography, Button } from 'antd';
 
 const { Title, Paragraph } = Typography;

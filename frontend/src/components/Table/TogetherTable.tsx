@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { Table, Button, Tooltip } from "antd";
-import { fetchTogetherData, TogetherData } from "@/app/services/togetherService";
+import { fetchTogetherData, TogetherData } from "@/services/togetherService";
 import { useRouter } from "next/navigation";
-import styles from "@/app/style/TogetherTable.module.css";
+import styles from "@/style/TogetherTable.module.css";
 
 const createColumn = (key: string, title: string, width: number = 250) => ({
   title: (

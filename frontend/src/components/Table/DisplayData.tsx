@@ -4,12 +4,12 @@ import React, { useState, useEffect } from "react";
 import { Typography, Table, Radio, Row, Col, Button, Card, message, Tooltip } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
-import { fetchData } from "@/app/services/fetchDataService";
-import { calculateTotalCost } from "@/app/services/costService";
-import "@/app/style/DisplayData.css";
+import { fetchData } from "@/services/fetchDataService";
+import { calculateTotalCost } from "@/services/costService";
+import "@/style/DisplayData.css";
 import { DataItem, ColumnItem } from "@/types/data";
-import { getColumns } from "@/app/utils/columns";
-import { handleEnrichment } from "@/app/utils/enrichment";
+import { getColumns } from "@/utils/columns";
+import { handleEnrichment } from "@/utils/enrichment";
 
 const { Title } = Typography;
 
