@@ -2,9 +2,6 @@
 
 ### November 8, 2024
 
-#### What's New?
-We are thrilled to share updates and enhancements across the payment feature and dataset history management functionalities.
-
 ### Payment Feature
 
 **Sabina (Frontend - Payment Feature)**  
@@ -15,11 +12,19 @@ Sabina has introduced a redesigned payment interface, simplifying the user exper
 - **UI Testing**: Comprehensive tests were conducted to ensure the payment interface works consistently across devices and browsers.
 
 **Mihaela (Backend - Payment Feature)**  
-Mihaela implemented essential backend services, enhancing payment transaction security and reliability.
+Mihaela implemented backend changes, which are important for the payment process.
 
-- **Payment Backend Setup**: Established secure payment processing services with robust API integrations.
-- **Transaction Security and Validation**: Strengthened payment data security by adding validation and security checks to prevent unauthorized access.
-- **Payment Logging and Error Handling**: Logging was implemented for transaction tracking, along with informative error handling to support user feedback.
+  - **Content-type Creation**: Created a new **CreditPackage** Collection Type in Strapi, enabling users to purchase credit packages for enrichment tasks.
+  - **Cost Definition**: Defined the cost of one row of enrichment as **1 credit**.
+  - **Credit Package Component**: Began development of the **CreditPackage** component to display available credit packages.
+  - **Service Development**: Implemented a getCreditPackages service to get packages from the backend.
+  - **Frontend Payment**: Started defining a simple page to display packages.
+
+- **Available Credit Packages**:
+  - **Basic Package**: 100 credits for $10
+  - **Standard Package**: 500 credits for $15
+  - **Premium Package**: 1000 credits for $20
+
 
 ### History and Dataset Management
 
