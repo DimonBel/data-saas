@@ -34,9 +34,7 @@
 - **Testing User Access Restrictions**: Validated that users can only access their own datasets through rigorous security and access tests.
 
 **Dima (History and Dataset Management)**  
-- **Develop History Retrieval Logic**: Implemented backend endpoints to manage user-specific dataset history retrieval.
-- **Coordinate API for Dataset Storage and Retrieval**: Streamlined API calls to sync with Mada’s database structure for seamless data storage and access.
-- **Code Review and Refinement**: Conducted code reviews to ensure optimal integration and performance across dataset management.
+- **Develop History Retrieval Logic**: Enhanced the enrich_data function by refining the database schema to ensure accurate representation and storage of enriched data. Implemented robust logic to save pre-enriched data in the database, improving data integrity and facilitating efficient retrieva
 
 #### Questions or Concerns?
 For any questions or further assistance with these updates, please reach out to our support team or refer to our documentation.
