@@ -18,7 +18,11 @@
 ![image](https://github.com/user-attachments/assets/be509220-04c4-484a-8193-61309b280de4)
 ![image](https://github.com/user-attachments/assets/f12f3d67-9808-4acf-9e73-5235aa64b7be)
 
-
+- **Sabina (Payment UI Development)**:
+  - **Completed the user interface** for the payment feature, incorporating fields for card details, expiration date, CVV, and auto-filled calculated amount based on user selections.
+  - **Integrated styling** for the payment form to match the overall design.
+  - **Implemented auto-fill functionality** in the `amount` field using the `calculateTotalCost` function. Ensured that the amount field displays the calculated value dynamically based on the number of rows and selected column type.
+![image](https://github.com/user-attachments/assets/3c89ca18-b125-4b0e-b2ba-477e8a118ffb)
 
 
 ### History and Dataset Management
