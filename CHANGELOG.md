@@ -1,26 +1,41 @@
-Sabina (Frontend - Payment Feature)
+# Changelog
 
-Design Payment UI: Create user-friendly interfaces for payment input fields, buttons, and layout.
-Frontend Payment Integration: Connect frontend to backend endpoints for payment processing, handling user inputs and responses.
-UI Testing: Conduct tests to ensure the payment interface works smoothly across different devices and browsers.
+### November 8, 2024
 
+#### What's New?
+We are thrilled to share updates and enhancements across the payment feature and dataset history management functionalities.
 
-Mihaela (Backend - Payment Feature)
+### Payment Feature
 
-Payment Backend Setup: Implement payment processing services, including setting up secure API integrations.
-Transaction Security and Validation: Add necessary security checks and validation to protect payment data and prevent unauthorized access.
-Payment Logging and Error Handling: Implement logging for payment transactions and handle errors gracefully with informative user feedback.
+**Sabina (Frontend - Payment Feature)**  
+Sabina has introduced a redesigned payment interface, simplifying the user experience and enhancing interaction with the payment process.
 
+- **Design Payment UI**: A user-friendly interface was developed for payment inputs, buttons, and layout to streamline the payment experience.
+- **Frontend Payment Integration**: The frontend is now connected to backend payment processing endpoints, enabling seamless handling of user inputs and transaction responses.
+- **UI Testing**: Comprehensive tests were conducted to ensure the payment interface works consistently across devices and browsers.
 
-Mada (History and Dataset Storage)
+**Mihaela (Backend - Payment Feature)**  
+Mihaela implemented essential backend services, enhancing payment transaction security and reliability.
 
-User-Specific Dataset History Storage: Work on the database structure and schema for storing datasets on a per-user basis.
-Optimize Database for History Retrieval: Ensure efficient queries and indexing to retrieve user-specific history quickly.
-Testing User Access Restrictions: Confirm that users can only view their own dataset history, conducting security and access tests.
+- **Payment Backend Setup**: Established secure payment processing services with robust API integrations.
+- **Transaction Security and Validation**: Strengthened payment data security by adding validation and security checks to prevent unauthorized access.
+- **Payment Logging and Error Handling**: Logging was implemented for transaction tracking, along with informative error handling to support user feedback.
 
+### History and Dataset Management
 
-Dima (History and Dataset Management)
+**Mada (History and Dataset Storage)**  
+Mada optimized the dataset storage schema and retrieval process to improve user-specific history storage.
 
-Develop History Retrieval Logic: Implement backend endpoints for fetching and managing user-specific dataset history.
-Coordinate API for Dataset Storage and Retrieval: Set up API calls to store and retrieve datasets while coordinating with Mada’s database structure.
-Code Review and Refinement: Review and refine dataset management functionality, ensuring smooth integration and minimal latency.
+- **User-Specific Dataset History Storage**: Structured the database for efficient user-specific dataset storage.
+- **Optimize Database for History Retrieval**: Enhanced database indexing to allow faster access to user history.
+- **Testing User Access Restrictions**: Validated that users can only access their own datasets through rigorous security and access tests.
+
+**Dima (History and Dataset Management)**  
+Dima led the development of dataset retrieval functionality and coordinated API logic to facilitate smooth dataset access.
+
+- **Develop History Retrieval Logic**: Implemented backend endpoints to manage user-specific dataset history retrieval.
+- **Coordinate API for Dataset Storage and Retrieval**: Streamlined API calls to sync with Mada’s database structure for seamless data storage and access.
+- **Code Review and Refinement**: Conducted code reviews to ensure optimal integration and performance across dataset management.
+
+#### Questions or Concerns?
+For any questions or further assistance with these updates, please reach out to our support team or refer to our documentation.
