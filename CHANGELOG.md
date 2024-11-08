@@ -20,6 +20,10 @@
   - **Basic Package**: 100 credits for $10
   - **Standard Package**: 500 credits for $15
   - **Premium Package**: 1000 credits for $20
+![image](https://github.com/user-attachments/assets/be509220-04c4-484a-8193-61309b280de4)
+![image](https://github.com/user-attachments/assets/f12f3d67-9808-4acf-9e73-5235aa64b7be)
+
+
 
 
 ### History and Dataset Management
