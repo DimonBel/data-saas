@@ -4,11 +4,6 @@
 
 ### Payment Feature
 
-**Sabina (Frontend - Payment Feature)**  
-- **Design Payment UI**: A user-friendly interface was developed for payment inputs, buttons, and layout to streamline the payment experience.
-- **Frontend Payment Integration**: The frontend is now connected to backend payment processing endpoints, enabling seamless handling of user inputs and transaction responses.
-- **UI Testing**: Comprehensive tests were conducted to ensure the payment interface works consistently across devices and browsers.
-
 **Mihaela (Backend - Payment Feature)**  
   - **Content-type Creation**: Created a new **CreditPackage** Collection Type in Strapi, enabling users to purchase credit packages for enrichment tasks.
   - **Cost Definition**: Defined the cost of one row of enrichment as **1 credit**.
