@@ -23,6 +23,12 @@
     },
     "filepath": {
       "type": "string"
+    },
+    "datasets": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::dataset.dataset",
+      "mappedBy": "enriches"
     }
   }
 }

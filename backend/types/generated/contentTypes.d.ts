@@ -794,6 +794,7 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
     singularName: 'dataset';
     pluralName: 'datasets';
     displayName: 'dataset';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -805,6 +806,11 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
     columns: Attribute.JSON;
     file: Attribute.Media<'files'>;
     uploaded: Attribute.Date;
+    enriches: Attribute.Relation<
+      'api::dataset.dataset',
+      'manyToMany',
+      'api::enrich.enrich'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -836,6 +842,11 @@ export interface ApiEnrichEnrich extends Schema.CollectionType {
   attributes: {
     file: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
     filepath: Attribute.String;
+    datasets: Attribute.Relation<
+      'api::enrich.enrich',
+      'manyToMany',
+      'api::dataset.dataset'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

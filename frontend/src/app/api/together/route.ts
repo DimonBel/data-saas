@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import Together from 'together-ai';
-import { fetchData } from '@/app/services/fetchData';
+import { fetchData } from '@/services/fetchData';
 
 export async function GET() {
     const fetchedData = await fetchData();
