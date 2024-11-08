@@ -1,0 +1,21 @@
+{
+  "kind": "collectionType",
+  "collectionName": "phone_valids",
+  "info": {
+    "singularName": "phone-valid",
+    "pluralName": "phone-valids",
+    "displayName": "PhoneValid"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Valid": {
+      "type": "string"
+    },
+    "NotValid": {
+      "type": "string"
+    }
+  }
+}
