@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "data_matches",
+  "info": {
+    "singularName": "data-match",
+    "pluralName": "data-matches",
+    "displayName": "DataMatch"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "dataType": {
+      "type": "string"
+    },
+    "dataInfo": {
+      "type": "string"
+    },
+    "individual": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::individual.individual",
+      "inversedBy": "data_matches"
+    }
+  }
+}
