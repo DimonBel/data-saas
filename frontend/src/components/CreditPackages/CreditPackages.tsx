@@ -1,50 +1,44 @@
-// components/CreditPackages/CreditPackages.tsx
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Row, Col, Typography, Button, Space } from 'antd';
-import {
-  CheckCircleOutlined,
-  ThunderboltOutlined,
-} from '@ant-design/icons';
+import { CheckCircleOutlined, ThunderboltOutlined } from '@ant-design/icons';
 
 const { Title, Text } = Typography;
 
 interface CreditPackage {
-  name: string;
-  credits: number;
-  price: number;
-  benefits: string[];
+  id: number;
+  Name: string;
+  Credits: number;
+  Price: number;
+  benefits?: string[];
 }
 
-const packages: CreditPackage[] = [
-  {
-    name: 'Basic Package',
-    credits: 100,
-    price: 10,
-    benefits: ['Access to basic features', 'Email support'],
-  },
-  {
-    name: 'Standard Package',
-    credits: 500,
-    price: 15,
-    benefits: ['Everything in Basic', 'Priority support', 'Advanced analytics'],
-  },
-  {
-    name: 'Premium Package',
-    credits: 1000,
-    price: 20,
-    benefits: [
-      'Everything in Standard',
-      'Personal account manager',
-      'Custom solutions',
-    ],
-  },
-];
-
 const CreditPackages: React.FC = () => {
+  const [packages, setPackages] = useState<CreditPackage[]>([]);
+
+  useEffect(() => {
+    const fetchPackages = async () => {
+      try {
+        const response = await fetch("http://localhost:1337/api/credit-packages");
+        const data = await response.json();
+        const packagesData = data.data.map((item: any) => ({
+          id: item.id,
+          Name: item.attributes.Name,
+          Credits: item.attributes.Credits,
+          Price: item.attributes.Price,
+          benefits: item.attributes.benefits || [],
+        }));
+        setPackages(packagesData);
+      } catch (error) {
+        console.error("Error fetching credit packages:", error);
+      }
+    };
+
+    fetchPackages();
+  }, []);
+
   const handlePurchase = (pkg: CreditPackage) => {
-    // Handle the purchase logic here
-    console.log(`Purchasing ${pkg.name}`);
+    console.log(`Purchasing ${pkg.Name}`);
   };
 
   return (
@@ -60,7 +54,7 @@ const CreditPackages: React.FC = () => {
       </Title>
       <Row gutter={[16, 16]} justify="center" style={{ marginTop: '40px' }}>
         {packages.map((pkg) => (
-          <Col xs={24} sm={12} md={8} key={pkg.name}>
+          <Col xs={24} sm={12} md={8} key={pkg.id}>
             <Card
               style={{
                 background: '#2b2b2b',
@@ -70,9 +64,23 @@ const CreditPackages: React.FC = () => {
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
+                justifyContent: 'space-between',
+                minHeight: '400px', 
+                border: '2px solid transparent', 
+                transition: 'border-color 0.3s ease', 
               }}
-              bodyStyle={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}
+              bodyStyle={{
+                display: 'flex',
+                flexDirection: 'column',
+                height: '100%',
+              }}
               hoverable
+              onMouseEnter={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = '#f0c040'; 
+              }}
+              onMouseLeave={(e) => {
+                (e.currentTarget as HTMLElement).style.borderColor = 'transparent'; 
+              }}
             >
               <Space
                 direction="vertical"
@@ -83,15 +91,15 @@ const CreditPackages: React.FC = () => {
                   style={{ fontSize: '48px', color: '#f0c040' }}
                 />
                 <Title level={3} style={{ color: 'white', margin: 0 }}>
-                  {pkg.name}
+                  {pkg.Name}
                 </Title>
                 <Text style={{ color: '#bfbfbf', fontSize: '16px' }}>
-                  {pkg.credits} credits for ${pkg.price}
+                  {pkg.Credits} credits for ${pkg.Price}
                 </Text>
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                  {pkg.benefits.map((benefit) => (
+                <ul style={{ listStyle: 'none', padding: 0, margin: 0, flexGrow: 1 }}>
+                  {pkg.benefits?.map((benefit, index) => (
                     <li
-                      key={benefit}
+                      key={index}
                       style={{ color: '#bfbfbf', marginBottom: '8px' }}
                     >
                       <CheckCircleOutlined
@@ -101,20 +109,18 @@ const CreditPackages: React.FC = () => {
                     </li>
                   ))}
                 </ul>
-                {/* Spacer to push the button to the bottom */}
-                <div style={{ flexGrow: 1 }} />
-                <Button
-                  type="primary"
-                  style={{
-                    width: '100%',
-                    borderRadius: '4px',
-                    marginTop: 'auto' ,
-                  }}
-                  onClick={() => handlePurchase(pkg)}
-                >
-                  Purchase
-                </Button>
               </Space>
+              <Button
+                type="primary"
+                style={{
+                  width: '100%',
+                  borderRadius: '4px',
+                  marginTop: 'auto', 
+                }}
+                onClick={() => handlePurchase(pkg)}
+              >
+                Purchase
+              </Button>
             </Card>
           </Col>
         ))}
