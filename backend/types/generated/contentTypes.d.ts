@@ -362,115 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiCreditPackageCreditPackage extends Schema.CollectionType {
-  collectionName: 'credit_packages';
-  info: {
-    singularName: 'credit-package';
-    pluralName: 'credit-packages';
-    displayName: 'CreditPackage';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    Name: Attribute.String;
-    Credits: Attribute.Integer;
-    Price: Attribute.Integer;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::credit-package.credit-package',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::credit-package.credit-package',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiDatasetDataset extends Schema.CollectionType {
-  collectionName: 'datasets';
-  info: {
-    singularName: 'dataset';
-    pluralName: 'datasets';
-    displayName: 'dataset';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    filename: Attribute.String;
-    filepath: Attribute.String;
-    data: Attribute.JSON;
-    columns: Attribute.JSON;
-    file: Attribute.Media<'files'>;
-    uploaded: Attribute.Date;
-    enriches: Attribute.Relation<
-      'api::dataset.dataset',
-      'manyToMany',
-      'api::enrich.enrich'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::dataset.dataset',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::dataset.dataset',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiEnrichEnrich extends Schema.CollectionType {
-  collectionName: 'enriches';
-  info: {
-    singularName: 'enrich';
-    pluralName: 'enriches';
-    displayName: 'Enrich';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    file: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
-    filepath: Attribute.String;
-    datasets: Attribute.Relation<
-      'api::enrich.enrich',
-      'manyToMany',
-      'api::dataset.dataset'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::enrich.enrich',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::enrich.enrich',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -901,6 +792,38 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiCreditPackageCreditPackage extends Schema.CollectionType {
+  collectionName: 'credit_packages';
+  info: {
+    singularName: 'credit-package';
+    pluralName: 'credit-packages';
+    displayName: 'CreditPackage';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Attribute.String;
+    Credits: Attribute.Integer;
+    Price: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::credit-package.credit-package',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::credit-package.credit-package',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiDataMatchDataMatch extends Schema.CollectionType {
   collectionName: 'data_matches';
   info: {
@@ -992,6 +915,11 @@ export interface ApiEnrichEnrich extends Schema.CollectionType {
   attributes: {
     file: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
     filepath: Attribute.String;
+    datasets: Attribute.Relation<
+      'api::enrich.enrich',
+      'manyToMany',
+      'api::dataset.dataset'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1060,9 +988,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::credit-package.credit-package': ApiCreditPackageCreditPackage;
-      'api::dataset.dataset': ApiDatasetDataset;
-      'api::enrich.enrich': ApiEnrichEnrich;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -1071,6 +996,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::credit-package.credit-package': ApiCreditPackageCreditPackage;
       'api::data-match.data-match': ApiDataMatchDataMatch;
       'api::dataset.dataset': ApiDatasetDataset;
       'api::enrich.enrich': ApiEnrichEnrich;

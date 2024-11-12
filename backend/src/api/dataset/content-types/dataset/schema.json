@@ -4,11 +4,7 @@
   "info": {
     "singularName": "dataset",
     "pluralName": "datasets",
-<<<<<<< HEAD
-    "displayName": "dataset",
-=======
     "displayName": "Dataset",
->>>>>>> origin/main
     "description": ""
   },
   "options": {
@@ -27,13 +23,6 @@
     "uploadedOn": {
       "type": "date"
     },
-<<<<<<< HEAD
-    "enriches": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::enrich.enrich",
-      "inversedBy": "datasets"
-=======
     "user": {
       "type": "relation",
       "relation": "manyToOne",
@@ -45,7 +34,6 @@
       "relation": "oneToMany",
       "target": "api::individual.individual",
       "mappedBy": "dataset"
->>>>>>> origin/main
     }
   }
 }
