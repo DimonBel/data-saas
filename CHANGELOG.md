@@ -1,5 +1,16 @@
 # Changelog
 
+### November 12, 2024
+
+### Payment Feature
+
+**Sabina (Payment UI Development)**:
+  - Update PaymentPage to dark theme and adjust placeholder colors, add credit page for 3 types of packages
+  - ![image](https://github.com/user-attachments/assets/1fc1a4a1-16e2-43d5-a0bb-0204b4c1bd3b)
+ 
+**Mihaela (Backend - Payment Feature)**  
+  - Connected Sabina's UI to the backend for the content type, enabling dynamic rendering of credit packages from backend data.
+
 ### November 8, 2024
 
 ### Payment Feature
@@ -34,11 +45,6 @@
 
 **Dima (History and Dataset Management)**  
 - **Develop History Retrieval Logic**: Enhanced the enrich_data function by refining the database schema to ensure accurate representation and storage of enriched data. Implemented robust logic to save pre-enriched data in the database, improving data integrity and facilitating efficient retrieva
-
-### November 12, 2024
-- **Sabina (Payment UI Development)**:
-  - Update PaymentPage to dark theme and adjust placeholder colors, add credit page for 3 types of packages
-  - ![image](https://github.com/user-attachments/assets/1fc1a4a1-16e2-43d5-a0bb-0204b4c1bd3b)
 
 #### Questions or Concerns?
 For any questions or further assistance with these updates, please reach out to our support team or refer to our documentation.
