@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'; // Use from 'next/navigation' instead of 'next/router'
+import { useRouter } from 'next/navigation';
 import { Card, Row, Col, Typography, Button, Space } from 'antd';
 import { CheckCircleOutlined, ThunderboltOutlined } from '@ant-design/icons';
 
@@ -17,7 +17,7 @@ interface CreditPackage {
 }
 
 const CreditPackages: React.FC = () => {
-  const router = useRouter(); // This should work with 'next/navigation'
+  const router = useRouter();
   const [packages, setPackages] = useState<CreditPackage[]>([]);
 
   useEffect(() => {
@@ -61,11 +61,12 @@ const CreditPackages: React.FC = () => {
                 borderRadius: '8px',
                 display: 'flex',
                 flexDirection: 'column',
+                justifyContent: 'space-between',
                 minHeight: '400px',
                 border: '2px solid transparent',
                 transition: 'border-color 0.3s ease',
               }}
-              bodyStyle={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+              bodyStyle={{ display: 'flex', flexDirection: 'column', flex: '1' }}
               hoverable
               onMouseEnter={(e) => {
                 (e.currentTarget as HTMLElement).style.borderColor = '#f0c040';
@@ -79,7 +80,7 @@ const CreditPackages: React.FC = () => {
                 <Title level={3} style={{ color: 'white', margin: 0 }}>
                   {pkg.Name}
                 </Title>
-                <Text style={{ color: '#bfbfbf', fontSize: '16px' }}>
+                <Text style={{ color: '#bfbfbf', fontSize: '16px', fontWeight: 'bold' }}>
                   {pkg.Credits} credits for ${pkg.Price}
                 </Text>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, flexGrow: 1 }}>
