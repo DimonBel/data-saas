@@ -1,5 +1,8 @@
+// components/CreditPackages/CreditPackages.tsx
 "use client";
+
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation'; // Use from 'next/navigation' instead of 'next/router'
 import { Card, Row, Col, Typography, Button, Space } from 'antd';
 import { CheckCircleOutlined, ThunderboltOutlined } from '@ant-design/icons';
 
@@ -14,6 +17,7 @@ interface CreditPackage {
 }
 
 const CreditPackages: React.FC = () => {
+  const router = useRouter(); // This should work with 'next/navigation'
   const [packages, setPackages] = useState<CreditPackage[]>([]);
 
   useEffect(() => {
@@ -38,17 +42,11 @@ const CreditPackages: React.FC = () => {
   }, []);
 
   const handlePurchase = (pkg: CreditPackage) => {
-    console.log(`Purchasing ${pkg.Name}`);
+    router.push(`/pay?amount=${pkg.Price}&name=${pkg.Name}`);
   };
 
   return (
-    <div
-      style={{
-        padding: '24px',
-        background: '#1e1e1e',
-        minHeight: '100vh',
-      }}
-    >
+    <div style={{ padding: '24px', background: '#1e1e1e', minHeight: '100vh' }}>
       <Title level={2} style={{ color: 'white', textAlign: 'center' }}>
         Available Credit Packages
       </Title>
@@ -61,35 +59,23 @@ const CreditPackages: React.FC = () => {
                 color: 'white',
                 textAlign: 'center',
                 borderRadius: '8px',
-                height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                justifyContent: 'space-between',
-                minHeight: '400px', 
-                border: '2px solid transparent', 
-                transition: 'border-color 0.3s ease', 
+                minHeight: '400px',
+                border: '2px solid transparent',
+                transition: 'border-color 0.3s ease',
               }}
-              bodyStyle={{
-                display: 'flex',
-                flexDirection: 'column',
-                height: '100%',
-              }}
+              bodyStyle={{ display: 'flex', flexDirection: 'column', height: '100%' }}
               hoverable
               onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = '#f0c040'; 
+                (e.currentTarget as HTMLElement).style.borderColor = '#f0c040';
               }}
               onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = 'transparent'; 
+                (e.currentTarget as HTMLElement).style.borderColor = 'transparent';
               }}
             >
-              <Space
-                direction="vertical"
-                size="middle"
-                style={{ width: '100%', flexGrow: 1 }}
-              >
-                <ThunderboltOutlined
-                  style={{ fontSize: '48px', color: '#f0c040' }}
-                />
+              <Space direction="vertical" size="middle" style={{ width: '100%', flexGrow: 1 }}>
+                <ThunderboltOutlined style={{ fontSize: '48px', color: '#f0c040' }} />
                 <Title level={3} style={{ color: 'white', margin: 0 }}>
                   {pkg.Name}
                 </Title>
@@ -98,13 +84,8 @@ const CreditPackages: React.FC = () => {
                 </Text>
                 <ul style={{ listStyle: 'none', padding: 0, margin: 0, flexGrow: 1 }}>
                   {pkg.benefits?.map((benefit, index) => (
-                    <li
-                      key={index}
-                      style={{ color: '#bfbfbf', marginBottom: '8px' }}
-                    >
-                      <CheckCircleOutlined
-                        style={{ color: '#52c41a', marginRight: '8px' }}
-                      />
+                    <li key={index} style={{ color: '#bfbfbf', marginBottom: '8px' }}>
+                      <CheckCircleOutlined style={{ color: '#52c41a', marginRight: '8px' }} />
                       {benefit}
                     </li>
                   ))}
@@ -112,11 +93,7 @@ const CreditPackages: React.FC = () => {
               </Space>
               <Button
                 type="primary"
-                style={{
-                  width: '100%',
-                  borderRadius: '4px',
-                  marginTop: 'auto', 
-                }}
+                style={{ width: '100%', borderRadius: '4px', marginTop: 'auto' }}
                 onClick={() => handlePurchase(pkg)}
               >
                 Purchase
