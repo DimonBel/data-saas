@@ -1,4 +1,4 @@
-import { User } from '../../types/user';
+//import { User } from '../../types/user';
 
 class UserService {
     private API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;

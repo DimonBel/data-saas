@@ -1,5 +1,5 @@
 import { RcFile } from 'antd/es/upload/interface';
-import { ApiRoutes } from '../api/apiRoutes';
+import { ApiRoutes } from '@/app/api/apiRoutes';
 import HttpService from './httpService';
 
 class UploadService {
