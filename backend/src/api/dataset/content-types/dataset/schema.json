@@ -4,7 +4,11 @@
   "info": {
     "singularName": "dataset",
     "pluralName": "datasets",
+<<<<<<< HEAD
     "displayName": "dataset",
+=======
+    "displayName": "Dataset",
+>>>>>>> origin/main
     "description": ""
   },
   "options": {
@@ -12,18 +16,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "filename": {
-      "type": "string"
-    },
-    "filepath": {
-      "type": "string"
-    },
-    "data": {
-      "type": "json"
-    },
-    "columns": {
-      "type": "json"
-    },
     "file": {
       "type": "media",
       "multiple": false,
@@ -32,14 +24,28 @@
         "files"
       ]
     },
-    "uploaded": {
+    "uploadedOn": {
       "type": "date"
     },
+<<<<<<< HEAD
     "enriches": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::enrich.enrich",
       "inversedBy": "datasets"
+=======
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "datasets"
+    },
+    "individuals": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::individual.individual",
+      "mappedBy": "dataset"
+>>>>>>> origin/main
     }
   }
 }

@@ -1,8 +1,8 @@
 "use client";
 
 import React from 'react';
-import AppLayout from '../components/MainPage/AppLayout';
-import DisplayData from '../components/Table/DisplayData';
+import AppLayout from '../../components/MainPage/AppLayout';
+import DisplayData from '../../components/Table/DisplayData';
 import { Typography, Button } from 'antd';
 
 const { Title, Paragraph } = Typography;

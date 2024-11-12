@@ -832,6 +832,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    datasets: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::dataset.dataset'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -896,6 +901,155 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiDataMatchDataMatch extends Schema.CollectionType {
+  collectionName: 'data_matches';
+  info: {
+    singularName: 'data-match';
+    pluralName: 'data-matches';
+    displayName: 'DataMatch';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    dataType: Attribute.String;
+    dataInfo: Attribute.String;
+    individual: Attribute.Relation<
+      'api::data-match.data-match',
+      'manyToOne',
+      'api::individual.individual'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::data-match.data-match',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::data-match.data-match',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDatasetDataset extends Schema.CollectionType {
+  collectionName: 'datasets';
+  info: {
+    singularName: 'dataset';
+    pluralName: 'datasets';
+    displayName: 'Dataset';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    file: Attribute.Media<'files'>;
+    uploadedOn: Attribute.Date;
+    user: Attribute.Relation<
+      'api::dataset.dataset',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    individuals: Attribute.Relation<
+      'api::dataset.dataset',
+      'oneToMany',
+      'api::individual.individual'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::dataset.dataset',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::dataset.dataset',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiEnrichEnrich extends Schema.CollectionType {
+  collectionName: 'enriches';
+  info: {
+    singularName: 'enrich';
+    pluralName: 'enriches';
+    displayName: 'Enrich';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    file: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
+    filepath: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::enrich.enrich',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::enrich.enrich',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiIndividualIndividual extends Schema.CollectionType {
+  collectionName: 'individuals';
+  info: {
+    singularName: 'individual';
+    pluralName: 'individuals';
+    displayName: 'Individual';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    data_matches: Attribute.Relation<
+      'api::individual.individual',
+      'oneToMany',
+      'api::data-match.data-match'
+    >;
+    dataset: Attribute.Relation<
+      'api::individual.individual',
+      'manyToOne',
+      'api::dataset.dataset'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::individual.individual',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::individual.individual',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -917,6 +1071,10 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::data-match.data-match': ApiDataMatchDataMatch;
+      'api::dataset.dataset': ApiDatasetDataset;
+      'api::enrich.enrich': ApiEnrichEnrich;
+      'api::individual.individual': ApiIndividualIndividual;
     }
   }
 }
