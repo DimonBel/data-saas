@@ -1,5 +1,18 @@
 # Changelog
 
+### November 13, 2024
+
+### Payment Feature
+ 
+**Mihaela (Backend - Payment Feature)**  
+  - **Connection of Backend with Frontend**: Connected Sabina's UI to the backend for the payment feature.
+  - **Stripe Connection**: Successfully connected Stripe to Strapi.
+  - **Transaction Registration**: Successfully implemented the paying feature with transactions registered on stripe.com.
+  ![image](https://github.com/user-attachments/assets/3999120a-eefa-4bad-88ef-4144429f42e0)
+  ![image](https://github.com/user-attachments/assets/c79bee2c-b1e0-4b51-bc9e-816788540363)
+  https://www.loom.com/share/bfecab869c954f639595f96d75328283?sid=f0d4fc8f-9795-4e13-9220-20c540ea4f12
+
+
 ### November 12, 2024
 
 ### Payment Feature
@@ -9,7 +22,7 @@
   - ![image](https://github.com/user-attachments/assets/1fc1a4a1-16e2-43d5-a0bb-0204b4c1bd3b)
  
 **Mihaela (Backend - Payment Feature)**  
-  - Connected Sabina's UI to the backend for the content type, enabling dynamic rendering of credit packages from backend data.
+  - **Dynamic Rendering**: Connected Sabina's UI to the backend for the content type, enabling dynamic rendering of credit packages from backend data.
 
 ### November 8, 2024
 
