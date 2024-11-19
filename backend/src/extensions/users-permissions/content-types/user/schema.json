@@ -70,6 +70,12 @@
       "relation": "oneToMany",
       "target": "api::dataset.dataset",
       "mappedBy": "user"
+    },
+    "enriches": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::enrich.enrich",
+      "mappedBy": "users_permissions_users"
     }
   }
 }
