@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { CardNumberElement, CardExpiryElement, CardCvcElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { Form, Button, Input, Row, Col, message } from 'antd';
 import styles from './PaymentPage.module.css';
+import { useRouter } from 'next/navigation';
 
 interface PaymentFormProps {
   amount: number;
@@ -13,6 +14,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount }) => {
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm();
+  const router = useRouter();
 
   const onFinish = async () => {
     try {
@@ -41,6 +43,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount }) => {
             message.error(`Payment failed: ${paymentResult.error.message}`);
           } else if (paymentResult.paymentIntent?.status === 'succeeded') {
             message.success('Payment successful!');
+            router.push('/upload'); // Redirect to /upload after successful payment
           }
         } else {
           message.error("Stripe or elements not loaded");
