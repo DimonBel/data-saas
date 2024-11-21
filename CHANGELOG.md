@@ -1,5 +1,13 @@
 # Changelog
 
+### November 21, 2024
+
+### Payment Feature
+ 
+**Mihaela (Backend - Payment Feature)**  
+  - **Error Solving**: Corrected the error messagess to be in English.
+  - **Redirect**: Successfully implemented the redirect to the upload page after payment.
+
 ### November 13, 2024
 
 ### Payment Feature
