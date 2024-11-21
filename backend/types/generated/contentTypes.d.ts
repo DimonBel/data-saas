@@ -792,6 +792,38 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiCreditPackageCreditPackage extends Schema.CollectionType {
+  collectionName: 'credit_packages';
+  info: {
+    singularName: 'credit-package';
+    pluralName: 'credit-packages';
+    displayName: 'CreditPackage';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Name: Attribute.String;
+    Credits: Attribute.Integer;
+    Price: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::credit-package.credit-package',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::credit-package.credit-package',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiDataMatchDataMatch extends Schema.CollectionType {
   collectionName: 'data_matches';
   info: {
@@ -883,6 +915,11 @@ export interface ApiEnrichEnrich extends Schema.CollectionType {
   attributes: {
     file: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
     filepath: Attribute.String;
+    datasets: Attribute.Relation<
+      'api::enrich.enrich',
+      'manyToMany',
+      'api::dataset.dataset'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -959,6 +996,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::credit-package.credit-package': ApiCreditPackageCreditPackage;
       'api::data-match.data-match': ApiDataMatchDataMatch;
       'api::dataset.dataset': ApiDatasetDataset;
       'api::enrich.enrich': ApiEnrichEnrich;

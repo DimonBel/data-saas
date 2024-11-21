@@ -1,0 +1,106 @@
+/* PaymentPage.module.css */
+
+.customInput .ant-input {
+    color: white;
+    background-color: #3a3a3a;
+  }
+  
+  .customInput .ant-input::placeholder {
+    color: white;
+    opacity: 1; /* Ensure full opacity */
+  }
+  
+  /* For disabled input fields */
+  .customInput .ant-input[disabled] {
+    color: white;
+    background-color: #3a3a3a;
+    opacity: 1;
+  }
+  
+  .customInput .ant-input[disabled]::placeholder {
+    color: white;
+  }
+/* components/PaymentPage/PaymentPage.module.css */
+
+.card {
+    background-color: #2b2b2b;
+    border: none;
+    width: 100%;
+    border-radius: 8px;
+  }
+  
+  .title {
+    color: white;
+    text-align: center;
+  }
+  
+  .customInput .ant-input {
+    color: white;
+    background-color: #3a3a3a;
+    border: 1px solid #4a4a4a;
+  }
+  
+  .customInput .ant-input::placeholder {
+    color: white;
+    opacity: 1;
+  }
+  
+  .customInput .ant-input-affix-wrapper {
+    background-color: #3a3a3a;
+    border: 1px solid #4a4a4a;
+  }
+  
+  .customInput .ant-input-affix-wrapper .ant-input {
+    background-color: #3a3a3a;
+    color: white;
+  }
+  
+  .customInput .ant-input-affix-wrapper input::placeholder {
+    color: white;
+    opacity: 1;
+  }
+  
+  .customInput .ant-input-prefix {
+    color: white;
+  }
+  
+  /* For disabled input fields */
+  .customInput .ant-input[disabled],
+  .customInput .ant-input-affix-wrapper[disabled] {
+    color: white;
+    background-color: #3a3a3a;
+    opacity: 1;
+  }
+  
+  .customInput .ant-input[disabled]::placeholder,
+  .customInput .ant-input-affix-wrapper[disabled] input::placeholder {
+    color: white;
+  }
+  
+  .submitButton {
+    width: 100%;
+    border-radius: 4px;
+  }
+  
+  /* Adjust form labels */
+  .ant-form-item-label > label {
+    color: white;
+  }
+  
+  /* Adjust error messages */
+  .ant-form-item-explain-error {
+    color: #ff4d4f;
+  }
+  
+  /* Adjust input borders on focus */
+  .customInput .ant-input:focus,
+  .customInput .ant-input-affix-wrapper:focus {
+    border-color: #1890ff;
+    box-shadow: none;
+  }
+  
+  /* Adjust prefix icon color on focus */
+  .customInput .ant-input-affix-wrapper-focused .ant-input-prefix {
+    color: #1890ff;
+  }
+    
