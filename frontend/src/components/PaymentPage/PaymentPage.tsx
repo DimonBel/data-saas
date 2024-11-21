@@ -19,7 +19,7 @@ const PaymentPage: React.FC = () => {
   const name = searchParams.get('name') || "Selected Package";
 
   return (
-    <Elements stripe={stripePromise}>
+    <Elements stripe={stripePromise} options={{ locale: 'en' }}>
       <Layout className={styles.paymentLayout}>
         <Space direction="vertical" size="large" className={styles.paymentCard}>
           <Title level={3} style={{ color: 'white', textAlign: 'center' }}>
