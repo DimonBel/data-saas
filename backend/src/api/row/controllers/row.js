@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * individual controller
+ * row controller
  */
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::individual.individual');
+module.exports = createCoreController('api::row.row');

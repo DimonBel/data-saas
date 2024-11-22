@@ -1,12 +1,9 @@
-"use client";
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Upload, Button, message, Form, Tag, Row, Col } from 'antd';
 import { UploadOutlined, InboxOutlined } from '@ant-design/icons';
-import { UploadFile } from 'antd/es/upload/interface';
-import { parseFileColumnsAndData } from '@/services/fileService';
+import { UploadFile, RcFile } from 'antd/es/upload/interface';
+import Papa from 'papaparse';
 import UploadService from '@/services/uploadService';
-import { RcFile } from 'antd/es/upload/interface';
 import "@/style/FileUploader.css";
 import { useRouter } from 'next/navigation';
 
@@ -24,6 +21,8 @@ const FileUploader: React.FC = () => {
     'country', 'first_name', 'last_name',
     'phone', 'language', 'gender', 'birth_date'
   ];
+
+  const [user, setUser] = useState<any>(null);
 
   const uploadProps = {
     accept: '.csv, .xls, .xlsx',
@@ -49,11 +48,31 @@ const FileUploader: React.FC = () => {
   };
 
   const handleParseColumns = async (file: RcFile) => {
+    console.log("intra in handleParseColumns");
     try {
-      const parsedResult = await parseFileColumnsAndData(file);
-      setColumns(parsedResult.columns);
+      const parseFile = (file: RcFile): Promise<{ columns: string[]; data: any[] }> =>
+        new Promise((resolve, reject) => {
+          Papa.parse(file, {
+            header: true,
+            skipEmptyLines: true,
+            complete: (result: any) => {
+              if (result.errors.length) {
+                reject(result.errors);
+              } else {
+                const columns = Object.keys(result.data[0] || {});
+                const data = result.data;
+                resolve({ columns, data });
+              }
+            },
+            error: (error: any) => reject(error),
+          });
+        });
+
+      const parsedResult = await parseFile(file);
+      setColumns(parsedResult.columns.reduce((acc, col) => ({ ...acc, [col]: col }), {}));
       setParsedData(parsedResult.data);
       message.success('File parsed successfully');
+      console.log("the parsed file: ", parsedResult);
     } catch (error) {
       message.error('Failed to parse columns');
       console.error('Parse error:', error);
@@ -69,21 +88,79 @@ const FileUploader: React.FC = () => {
     setLoading(true);
 
     try {
-      // Upload the file and get metadata
-      const uploadedFile = await uploadService.uploadFileToStrapi(fileList[0] as RcFile);
+      // Upload the file to Strapi
+      // const uploadedFile = await uploadService.uploadFileToStrapi(fileList[0] as RcFile);
       const datasetName = fileList[0].name.split('.').slice(0, -1).join('.');
       const uploadedAt = new Date().toISOString();
 
-      const metadata = {
-        filename: datasetName,
-        columns: columns,
-        uploaded: uploadedAt,
-        filepath: uploadedFile.url,
-        file: uploadedFile.id,
+      // Save Dataset metadata to Strapi
+      const datasetMetadata = {
+        data: {
+          filename: datasetName,
+          columns: Object.keys(columns),  // Column names
+          uploaded: uploadedAt,
+          // filepath: uploadedFile.url,
+          // file: uploadedFile.id, // File ID from media upload
+          user: 2,
+        }
       };
+      
+      console.log("!!!!!!!    ", datasetMetadata)
+      
+      
+      // Create Dataset entity in Strapi
+      const datasetResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}datasets`, {
+        method: 'POST',
+        headers: {
+          "Access-Control-Allow-Headers" : "Content-Type",
+              "Access-Control-Allow-Origin": "*",
+            'Content-Type': 'application/json',
+             "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PATCH"
+        },
+        body: JSON.stringify(datasetMetadata),
+      });
 
-      // Save metadata along with parsed data
-      await uploadService.saveMetadataToStrapi(metadata, parsedData);
+      console.log(datasetResponse)
+
+      const dataset = await datasetResponse.json();
+      console.log("!!!!!   dataset: ", dataset)
+      const datasetId = dataset?.data?.id;
+      
+
+      // Save parsed rows to Strapi
+      let rowCntr = 0;
+      for (const row of parsedData) {
+        rowCntr++;
+        console.log("!!!! the row:  ", row);
+        const rowData = {
+          data: {
+            dataset: datasetId,  // Linking row to dataset
+            row_index: rowCntr,
+            name: row.Name,  
+            surname: row.Surname,
+            language: row.Language,
+            phone: row.Phone,
+            country: row.Country,
+            function: row.Function,
+            gender: row.Gender,
+          }
+        };
+
+        const rowResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}rows`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`, // Use token from .env.local
+          },
+          body: JSON.stringify(rowData),
+        });
+
+        const rowResult = await rowResponse.json();
+        if (!rowResponse.ok) {
+          console.error('Error creating row:', rowResult);
+        }
+      }
+
       message.success('File and metadata saved successfully');
       setFileList([]);
       router.push('/preview');
@@ -93,7 +170,6 @@ const FileUploader: React.FC = () => {
       setLoading(false);
     }
   };
-
 
   return (
     <div style={{ padding: '10px' }}>

@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "rows",
+  "info": {
+    "singularName": "row",
+    "pluralName": "rows",
+    "displayName": "Row",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "row_index": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string"
+    },
+    "surname": {
+      "type": "string"
+    },
+    "dataset": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::dataset.dataset",
+      "inversedBy": "rows"
+    },
+    "function": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "language": {
+      "type": "string"
+    },
+    "phone": {
+      "type": "text"
+    },
+    "country": {
+      "type": "string"
+    }
+  }
+}

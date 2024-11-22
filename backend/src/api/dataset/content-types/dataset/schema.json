@@ -20,7 +20,7 @@
         "files"
       ]
     },
-    "uploadedOn": {
+    "uploaded": {
       "type": "date"
     },
     "user": {
@@ -29,10 +29,19 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "datasets"
     },
-    "individuals": {
+    "columns": {
+      "type": "json"
+    },
+    "filename": {
+      "type": "string"
+    },
+    "filepath": {
+      "type": "string"
+    },
+    "rows": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::individual.individual",
+      "target": "api::row.row",
       "mappedBy": "dataset"
     }
   }
