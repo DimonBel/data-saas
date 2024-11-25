@@ -101,21 +101,17 @@ const FileUploader: React.FC = () => {
           uploaded: uploadedAt,
           // filepath: uploadedFile.url,
           // file: uploadedFile.id, // File ID from media upload
-          user: 2,
+          user: 3,
         }
       };
-      
-      console.log("!!!!!!!    ", datasetMetadata)
-      
+            
       
       // Create Dataset entity in Strapi
       const datasetResponse = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}datasets`, {
         method: 'POST',
         headers: {
-          "Access-Control-Allow-Headers" : "Content-Type",
-              "Access-Control-Allow-Origin": "*",
-            'Content-Type': 'application/json',
-             "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PATCH"
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         },
         body: JSON.stringify(datasetMetadata),
       });
@@ -150,7 +146,7 @@ const FileUploader: React.FC = () => {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`, // Use token from .env.local
+            'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`, // Use token from .env.local
           },
           body: JSON.stringify(rowData),
         });

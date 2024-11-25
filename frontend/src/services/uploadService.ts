@@ -19,11 +19,8 @@ class UploadService {
       // Use the configuration object to add headers
       const config = {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          "Access-Control-Allow-Headers" : "Content-Type",
-              "Access-Control-Allow-Origin": "*",
-            'Content-Type': 'application/json',
-             "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PATCH"
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         },
       };
 
