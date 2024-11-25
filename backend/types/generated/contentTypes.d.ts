@@ -383,7 +383,6 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
     >;
     columns: Attribute.JSON;
     filename: Attribute.String;
-    filepath: Attribute.String;
     rows: Attribute.Relation<
       'api::dataset.dataset',
       'oneToMany',

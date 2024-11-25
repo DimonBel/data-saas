@@ -1,55 +1,81 @@
-import * as XLSX from 'xlsx';
-import { RcFile } from 'antd/es/upload/interface';
+import Papa from "papaparse";
 
-export const parseFileColumnsAndData = (file: RcFile): Promise<{ columns: Array<{ original: string, transformed: string }>, data: any[] }> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-
-    reader.onload = (e: any) => {
-      try {
-        const data = new Uint8Array(e.target.result);
-        const workbook = XLSX.read(data, { type: 'array' });
-        const sheetName = workbook.SheetNames[0];
-
-        if (!sheetName) {
-          return reject('No sheet found in the workbook');
-        }
-
-        const worksheet = workbook.Sheets[sheetName];
-        const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-
-        if (jsonData.length > 0) {
-          const headers = jsonData[0] as string[];
-
-          // Формируем массив колонок с их оригинальными и трансформированными именами
-          const orderedColumns: Array<{ original: string, transformed: string }> = headers.map((header: string) => ({
-            original: header,
-            transformed: header.toLowerCase().replace(/\s+/g, '_') // Преобразуем заголовок
-          }));
-
-          // Преобразуем строки данных (после заголовков)
-          const rowData = jsonData.slice(1).map((row: any[]) => {
-            return row;
-          });
-
+export default class FileService {
+  static async parseFile(file: File): Promise<{ columns: string[]; data: any[] }> {
+    return new Promise((resolve, reject) => {
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (result) => {
+          if (result.errors.length) reject(result.errors);
           resolve({
-            columns: orderedColumns,
-            data: rowData,
+            columns: Object.keys(result.data[0] || {}),
+            data: result.data,
           });
-        } else {
-          reject('No data found in file');
-        }
-      } catch (error) {
-        console.error('Error parsing file:', error);
-        reject('Failed to parse the file');
-      }
-    };
+        },
+        error: (error) => reject(error),
+      });
+    });
+  }
 
-    reader.onerror = (error) => {
-      console.error('FileReader error:', error);
-      reject('File reading failed');
-    };
+  static async uploadFileToStrapi(file: File): Promise<any> {
+    const formData = new FormData();
+    formData.append("files", file);
 
-    reader.readAsArrayBuffer(file);
-  });
-};
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}upload`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+      },
+      body: formData,
+    });
+
+    if (!response.ok) throw new Error("Failed to upload file to Strapi");
+    return response.json();
+  }
+
+  static async createDataset(dataset: any): Promise<any> {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}datasets`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+      },
+      body: JSON.stringify(dataset),
+    });
+
+    if (!response.ok) throw new Error("Failed to create dataset");
+    return response.json();
+  }
+
+  static async uploadRows(rows: any[], datasetId: number): Promise<void> {
+    for (let i = 0; i < rows.length; i++) {
+      const rowData = {
+        data: {
+            dataset: datasetId,
+            row_index: i + 1,
+            name: rows[i].name,
+            surname: rows[i].surname,
+            function: rows[i].function,
+            email: rows[i].email,
+            gender: rows[i].gender,
+            language: rows[i].language,
+            phone: rows[i].phone,
+            country: rows[i].country,
+        },
+      };
+
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}rows`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+        },
+        body: JSON.stringify(rowData),
+      });
+
+      if (!response.ok) throw new Error("Failed to upload rows");
+    }
+  }
+}

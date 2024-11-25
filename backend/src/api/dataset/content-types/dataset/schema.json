@@ -35,9 +35,6 @@
     "filename": {
       "type": "string"
     },
-    "filepath": {
-      "type": "string"
-    },
     "rows": {
       "type": "relation",
       "relation": "oneToMany",

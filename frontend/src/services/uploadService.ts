@@ -19,7 +19,6 @@ class UploadService {
       // Use the configuration object to add headers
       const config = {
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
         },
       };
@@ -30,7 +29,6 @@ class UploadService {
         formData,
         config
       );
-      console.log("teh resposne:  ", response)
       
       const uploadedFiles = response.data;
       return uploadedFiles[0]; // Assume the first file is the one uploaded
