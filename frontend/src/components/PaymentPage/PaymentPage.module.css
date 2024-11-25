@@ -1,0 +1,55 @@
+/* components/PaymentPage/PaymentPage.module.css */
+
+.paymentLayout {
+    background-color: #1e1e1e;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .paymentCard {
+    background-color: #2b2b2b;
+    padding: 30px;
+    border-radius: 8px;
+    width: 400px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .paymentTitle {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  
+  .whiteText {
+    color: white;
+  }
+  
+  .paymentForm {
+    display: flex;
+    flex-direction: column;
+    color: white; /* Ensure text is white inside the form */
+  }
+  
+  .cardInput {
+    padding: 10px;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+    background-color: #fff;
+  }
+  
+  .amountInput {
+    background-color: #333;
+    color: #d9d9d9;
+    font-weight: bold;
+    border: 1px solid #d9d9d9;
+    border-radius: 4px;
+  }
+  
+  .payButton {
+    width: 100%;
+    background-color: #1890ff;
+    border: none;
+    font-size: 1rem;
+  }
+  
