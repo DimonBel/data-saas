@@ -1,51 +1,62 @@
 import axios from 'axios';
 
-interface Column {
-    original: string;
-    transformed: string;
+interface RowAttributes {
+    row_index: number;
+    [key: string]: string | number | null;
+}
+
+interface Row {
+    id: number;
+    attributes: RowAttributes;
 }
 
 interface Dataset {
     id: number;
     attributes: {
-        filename: string;
-        filepath: string;
+        createdAt: string;
+        updatedAt: string;
+        publishedAt: string;
         uploaded: string;
-        columns: Column[]; // Update column type to match the new structure
-        data: (string | number | null)[][];
+        columns: string[];
+        filename: string;
+        rows: {
+            data: Row[];
+        };
     };
 }
 
 interface ApiResponse {
     data: Dataset[];
+    meta: {
+        pagination: {
+            page: number;
+            pageSize: number;
+            pageCount: number;
+            total: number;
+        };
+    };
 }
 
 export const fetchData = async () => {
     try {
-        const response = await axios.get<ApiResponse>('http://localhost:1337/api/datasets/?sort[0]=id:desc&pagination[pageSize]=1');
+        const response = await axios.get<ApiResponse>('http://localhost:1337/api/datasets?populate=*');
         const result = response.data;
 
         if (result.data && result.data.length > 0) {
-            const dataset = result.data[0];
-            const columnsArray: Column[] = dataset.attributes.columns;
-            const data: (string | number | null)[][] = dataset.attributes.data;
+            const dataset = result.data[0]; // Get the first dataset
+            const columns = dataset.attributes.columns; // Array of column names
+            const rows = dataset.attributes.rows.data; // Array of row objects
 
-            // Create an array of original column names
-            const columnOrder: string[] = columnsArray.map(column => column.original);
-
-            // Mapping the original data into the desired JSON structure
-            const formattedData = data
-                .filter(row => row.length > 0) // Filter out any empty rows
-                .map((row: (string | number | null)[]) => {
-                    const rowData: Record<string, any> = {};
-                    columnOrder.forEach((columnName, index) => {
-                        rowData[columnName] = row[index];
-                    });
-                    return rowData;
+            // Map rows into the desired JSON structure
+            const formattedData = rows.map(row => {
+                const rowData: Record<string, any> = {};
+                columns.forEach(column => {
+                    rowData[column] = row.attributes[column] ?? null; // Map each column to the corresponding row attribute
                 });
+                return rowData;
+            });
 
-            // Return only the new formatted data
-            return formattedData;
+            return formattedData; // Return the new formatted data
         }
 
         throw new Error('No data found');

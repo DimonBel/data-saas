@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "phones",
+  "info": {
+    "singularName": "phone",
+    "pluralName": "phones",
+    "displayName": "Phone",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "CountryInfo": {
+      "type": "string"
+    },
+    "enriches": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::enrich.enrich",
+      "mappedBy": "phones"
+    },
+    "phone_type": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::phone-type.phone-type",
+      "inversedBy": "phones"
+    },
+    "carier_info": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::carier-info.carier-info",
+      "inversedBy": "phones"
+    }
+  }
+}

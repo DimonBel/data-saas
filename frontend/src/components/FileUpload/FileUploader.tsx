@@ -24,13 +24,13 @@ const FileUploader: React.FC = () => {
   const router = useRouter();
   const columnSuggestions = [
     "email", "function", "country", "name", "surname",
-    "phone", "language", "gender",
+    "phone", "language", "gender", "linkedin",
   ];
   const [user, setUser] = useState<User | null>(null);
   const [userID, setUserID] = useState<string | null>(null);
 
   const { data: session, status } = useSession();
-  
+
   useEffect(() => {
     if (session?.user) {
       setUser(session.user as User);
@@ -102,7 +102,7 @@ const FileUploader: React.FC = () => {
 
       await FileService.uploadRows(parsedData, dataset.data.id);
       message.success("File and metadata uploaded successfully");
-      // router.push("/preview");
+      router.push("/preview");
     } catch (error: any) {
       message.error(error.message || "Upload failed");
     } finally {

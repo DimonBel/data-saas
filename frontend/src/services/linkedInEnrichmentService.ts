@@ -121,6 +121,8 @@ class LinkedInEnrichmentService {
       console.error('Error fetching LinkedIn data:', error);
       throw error;
     }
+
+
   }
 }
 

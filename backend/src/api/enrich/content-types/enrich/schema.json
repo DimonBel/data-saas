@@ -4,31 +4,31 @@
   "info": {
     "singularName": "enrich",
     "pluralName": "enriches",
-    "displayName": "Enrich"
+    "displayName": "Enrich",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
   "pluginOptions": {},
   "attributes": {
-    "file": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
-      "type": "media",
-      "multiple": true
-    },
-    "filepath": {
-      "type": "string"
-    },
-    "datasets": {
+    "linkedins": {
       "type": "relation",
       "relation": "manyToMany",
-      "target": "api::dataset.dataset",
-      "mappedBy": "enriches"
+      "target": "api::linkedin.linkedin",
+      "inversedBy": "enriches"
+    },
+    "phones": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::phone.phone",
+      "inversedBy": "enriches"
+    },
+    "users_permissions_users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "enriches"
     }
   }
 }

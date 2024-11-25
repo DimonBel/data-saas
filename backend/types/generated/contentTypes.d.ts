@@ -362,117 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiDatasetDataset extends Schema.CollectionType {
-  collectionName: 'datasets';
-  info: {
-    singularName: 'dataset';
-    pluralName: 'datasets';
-    displayName: 'Dataset';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    file: Attribute.Media<'files'>;
-    uploaded: Attribute.Date;
-    user: Attribute.Relation<
-      'api::dataset.dataset',
-      'manyToOne',
-      'plugin::users-permissions.user'
-    >;
-    columns: Attribute.JSON;
-    filename: Attribute.String;
-    rows: Attribute.Relation<
-      'api::dataset.dataset',
-      'oneToMany',
-      'api::row.row'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::dataset.dataset',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::dataset.dataset',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiEnrichEnrich extends Schema.CollectionType {
-  collectionName: 'enriches';
-  info: {
-    singularName: 'enrich';
-    pluralName: 'enriches';
-    displayName: 'Enrich';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    file: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
-    filepath: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::enrich.enrich',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::enrich.enrich',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiRowRow extends Schema.CollectionType {
-  collectionName: 'rows';
-  info: {
-    singularName: 'row';
-    pluralName: 'rows';
-    displayName: 'Row';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    row_index: Attribute.Integer;
-    name: Attribute.String;
-    surname: Attribute.String;
-    dataset: Attribute.Relation<
-      'api::row.row',
-      'manyToOne',
-      'api::dataset.dataset'
-    >;
-    function: Attribute.String;
-    email: Attribute.String;
-    gender: Attribute.String;
-    language: Attribute.String;
-    phone: Attribute.Text;
-    country: Attribute.String;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::row.row', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::row.row', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -839,6 +728,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::dataset.dataset'
     >;
+    enriches: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToMany',
+      'api::enrich.enrich'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -903,6 +797,42 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiCarierInfoCarierInfo extends Schema.CollectionType {
+  collectionName: 'carier_infos';
+  info: {
+    singularName: 'carier-info';
+    pluralName: 'carier-infos';
+    displayName: 'CarierInfo';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    provider: Attribute.String;
+    phones: Attribute.Relation<
+      'api::carier-info.carier-info',
+      'oneToMany',
+      'api::phone.phone'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::carier-info.carier-info',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::carier-info.carier-info',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiCreditPackageCreditPackage extends Schema.CollectionType {
   collectionName: 'credit_packages';
   info: {
@@ -935,42 +865,6 @@ export interface ApiCreditPackageCreditPackage extends Schema.CollectionType {
   };
 }
 
-export interface ApiDataMatchDataMatch extends Schema.CollectionType {
-  collectionName: 'data_matches';
-  info: {
-    singularName: 'data-match';
-    pluralName: 'data-matches';
-    displayName: 'DataMatch';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    dataType: Attribute.String;
-    dataInfo: Attribute.String;
-    individual: Attribute.Relation<
-      'api::data-match.data-match',
-      'manyToOne',
-      'api::individual.individual'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::data-match.data-match',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::data-match.data-match',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface ApiDatasetDataset extends Schema.CollectionType {
   collectionName: 'datasets';
   info: {
@@ -984,16 +878,18 @@ export interface ApiDatasetDataset extends Schema.CollectionType {
   };
   attributes: {
     file: Attribute.Media<'files'>;
-    uploadedOn: Attribute.Date;
+    uploaded: Attribute.Date;
     user: Attribute.Relation<
       'api::dataset.dataset',
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-    individuals: Attribute.Relation<
+    columns: Attribute.JSON;
+    filename: Attribute.String;
+    rows: Attribute.Relation<
       'api::dataset.dataset',
       'oneToMany',
-      'api::individual.individual'
+      'api::row.row'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1019,17 +915,26 @@ export interface ApiEnrichEnrich extends Schema.CollectionType {
     singularName: 'enrich';
     pluralName: 'enriches';
     displayName: 'Enrich';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    file: Attribute.Media<'images' | 'files' | 'videos' | 'audios', true>;
-    filepath: Attribute.String;
-    datasets: Attribute.Relation<
+    linkedins: Attribute.Relation<
       'api::enrich.enrich',
       'manyToMany',
-      'api::dataset.dataset'
+      'api::linkedin.linkedin'
+    >;
+    phones: Attribute.Relation<
+      'api::enrich.enrich',
+      'manyToMany',
+      'api::phone.phone'
+    >;
+    users_permissions_users: Attribute.Relation<
+      'api::enrich.enrich',
+      'manyToMany',
+      'plugin::users-permissions.user'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -1049,42 +954,166 @@ export interface ApiEnrichEnrich extends Schema.CollectionType {
   };
 }
 
-export interface ApiIndividualIndividual extends Schema.CollectionType {
-  collectionName: 'individuals';
+export interface ApiLinkedinLinkedin extends Schema.CollectionType {
+  collectionName: 'linkedins';
   info: {
-    singularName: 'individual';
-    pluralName: 'individuals';
-    displayName: 'Individual';
+    singularName: 'linkedin';
+    pluralName: 'linkedins';
+    displayName: 'Linkedin';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    data_matches: Attribute.Relation<
-      'api::individual.individual',
-      'oneToMany',
-      'api::data-match.data-match'
-    >;
-    dataset: Attribute.Relation<
-      'api::individual.individual',
-      'manyToOne',
-      'api::dataset.dataset'
+    About: Attribute.Text;
+    Skills: Attribute.Text;
+    Certification: Attribute.Text;
+    Projects: Attribute.Text;
+    Honors: Attribute.Text;
+    Experience: Attribute.Text;
+    Education: Attribute.Text;
+    Company: Attribute.Text;
+    Industry: Attribute.Text;
+    Location: Attribute.Text;
+    enriches: Attribute.Relation<
+      'api::linkedin.linkedin',
+      'manyToMany',
+      'api::enrich.enrich'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::individual.individual',
+      'api::linkedin.linkedin',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::individual.individual',
+      'api::linkedin.linkedin',
       'oneToOne',
       'admin::user'
     > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPhonePhone extends Schema.CollectionType {
+  collectionName: 'phones';
+  info: {
+    singularName: 'phone';
+    pluralName: 'phones';
+    displayName: 'Phone';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    CountryInfo: Attribute.String;
+    enriches: Attribute.Relation<
+      'api::phone.phone',
+      'manyToMany',
+      'api::enrich.enrich'
+    >;
+    phone_type: Attribute.Relation<
+      'api::phone.phone',
+      'manyToOne',
+      'api::phone-type.phone-type'
+    >;
+    carier_info: Attribute.Relation<
+      'api::phone.phone',
+      'manyToOne',
+      'api::carier-info.carier-info'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::phone.phone',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::phone.phone',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPhoneTypePhoneType extends Schema.CollectionType {
+  collectionName: 'phone_types';
+  info: {
+    singularName: 'phone-type';
+    pluralName: 'phone-types';
+    displayName: 'PhoneType';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Type: Attribute.String;
+    phones: Attribute.Relation<
+      'api::phone-type.phone-type',
+      'oneToMany',
+      'api::phone.phone'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::phone-type.phone-type',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::phone-type.phone-type',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiRowRow extends Schema.CollectionType {
+  collectionName: 'rows';
+  info: {
+    singularName: 'row';
+    pluralName: 'rows';
+    displayName: 'Row';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    row_index: Attribute.Integer;
+    name: Attribute.String;
+    surname: Attribute.String;
+    dataset: Attribute.Relation<
+      'api::row.row',
+      'manyToOne',
+      'api::dataset.dataset'
+    >;
+    function: Attribute.String;
+    email: Attribute.String;
+    gender: Attribute.String;
+    language: Attribute.String;
+    phone: Attribute.Text;
+    country: Attribute.String;
+    linkedin: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::row.row', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::row.row', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -1099,9 +1128,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::dataset.dataset': ApiDatasetDataset;
-      'api::enrich.enrich': ApiEnrichEnrich;
-      'api::row.row': ApiRowRow;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -1110,11 +1136,14 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::carier-info.carier-info': ApiCarierInfoCarierInfo;
       'api::credit-package.credit-package': ApiCreditPackageCreditPackage;
-      'api::data-match.data-match': ApiDataMatchDataMatch;
       'api::dataset.dataset': ApiDatasetDataset;
       'api::enrich.enrich': ApiEnrichEnrich;
-      'api::individual.individual': ApiIndividualIndividual;
+      'api::linkedin.linkedin': ApiLinkedinLinkedin;
+      'api::phone.phone': ApiPhonePhone;
+      'api::phone-type.phone-type': ApiPhoneTypePhoneType;
+      'api::row.row': ApiRowRow;
     }
   }
 }

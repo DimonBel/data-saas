@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "linkedins",
+  "info": {
+    "singularName": "linkedin",
+    "pluralName": "linkedins",
+    "displayName": "Linkedin",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "About": {
+      "type": "text"
+    },
+    "Skills": {
+      "type": "text"
+    },
+    "Certification": {
+      "type": "text"
+    },
+    "Projects": {
+      "type": "text"
+    },
+    "Honors": {
+      "type": "text"
+    },
+    "Experience": {
+      "type": "text"
+    },
+    "Education": {
+      "type": "text"
+    },
+    "Company": {
+      "type": "text"
+    },
+    "Industry": {
+      "type": "text"
+    },
+    "Location": {
+      "type": "text"
+    },
+    "enriches": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::enrich.enrich",
+      "mappedBy": "linkedins"
+    }
+  }
+}

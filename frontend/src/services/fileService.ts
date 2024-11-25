@@ -52,18 +52,23 @@ export default class FileService {
     for (let i = 0; i < rows.length; i++) {
       const rowData = {
         data: {
-            dataset: datasetId,
-            row_index: i + 1,
-            name: rows[i].name,
-            surname: rows[i].surname,
-            function: rows[i].function,
-            email: rows[i].email,
-            gender: rows[i].gender,
-            language: rows[i].language,
-            phone: rows[i].phone,
-            country: rows[i].country,
+          dataset: datasetId,
+          row_index: i + 1,
+          name: rows[i].name,
+          surname: rows[i].surname,
+          function: rows[i].function,
+          email: rows[i].email,
+          gender: rows[i].gender,
+          language: rows[i].language,
+          phone: rows[i].phone,
+          country: rows[i].country,
+          linkedin: rows[i].linkedin,
         },
+
       };
+
+      console.log("Posting row data:", rowData);
+
 
 
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}rows`, {
@@ -74,6 +79,7 @@ export default class FileService {
         },
         body: JSON.stringify(rowData),
       });
+      console.log(rowData);
 
       if (!response.ok) throw new Error("Failed to upload rows");
     }

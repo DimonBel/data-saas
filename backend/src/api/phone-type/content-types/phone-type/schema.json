@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "phone_types",
+  "info": {
+    "singularName": "phone-type",
+    "pluralName": "phone-types",
+    "displayName": "PhoneType",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Type": {
+      "type": "string"
+    },
+    "phones": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::phone.phone",
+      "mappedBy": "phone_type"
+    }
+  }
+}
