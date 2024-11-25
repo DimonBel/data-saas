@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * individual service
+ * row service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = createCoreService('api::individual.individual');
+module.exports = createCoreService('api::row.row');

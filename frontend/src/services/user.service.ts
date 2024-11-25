@@ -1,4 +1,4 @@
-//import { User } from '../../types/user';
+import { User } from '../types/user';
 
 class UserService {
     private API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -70,6 +70,30 @@ class UserService {
         } catch (error) {
             console.error('Get user profile error:', error);
             return null;
+        }
+    }
+
+    async getUserIdByEmail(email: string): Promise<string | null> {
+        try {
+          const url = `${this.API_URL}users?filters[email][$eq]=${email}`;
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: this.getHeaders(),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Failed to fetch user by email');
+          }
+    
+          const data = await response.json();
+          if (data && data.length > 0) {
+            return data[0].id; // Return the user ID from the first match
+          } else {
+            return null;
+          }
+        } catch (error) {
+          console.error('Error fetching user by email:', error);
+          return null;
         }
     }
 

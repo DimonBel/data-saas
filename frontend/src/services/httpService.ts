@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 
 export default class HttpService {
   private axiosInstance: AxiosInstance;
@@ -15,24 +15,33 @@ export default class HttpService {
     });
   }
 
-  public async get<T>(endpoint: string): Promise<AxiosResponse<T>> {
+  public async get<T>(endpoint: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     try {
-      return await this.axiosInstance.get<T>(endpoint);
+      return await this.axiosInstance.get<T>(endpoint, config);
     } catch (error) {
       throw new Error(`GET request failed: ${error}`);
     }
   }
 
-  public async post<T>(endpoint: string, data: any): Promise<AxiosResponse<T>> {
+  public async post<T>(
+    endpoint: string,
+    data: any,
+    config?: AxiosRequestConfig // Optional config to allow headers or other options
+  ): Promise<AxiosResponse<T>> {
     try {
       const isFormData = data instanceof FormData;
-      return await this.axiosInstance.post<T>(endpoint, data, {
-        headers: {
-          'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
-        },
-      });
-    } catch (error) {
-      throw new Error(`POST request failed: ${error}`);
+      const headers = {
+        'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
+        "Access-Control-Allow-Headers" : "Content-Type",
+              "Access-Control-Allow-Origin": "*",
+             "Access-Control-Allow-Methods": "OPTIONS,POST,GET,PATCH",
+        ...(config?.headers || {}), // Merge with any provided headers
+      };
+
+      return await this.axiosInstance.post<T>(endpoint, data, { ...config, headers });
+    } catch (error: any) {
+      console.error('POST request error:', error.response?.data || error.message);
+      throw new Error(`POST request failed: ${error.message}`);
     }
   }
 

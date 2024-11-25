@@ -14,7 +14,22 @@ class UploadService {
     formData.append('files', file);
 
     try {
-      const response = await this.httpService.post<{ id: number; url: string }[]>(ApiRoutes.Upload, formData);
+      const token = process.env.NEXT_PUBLIC_API_TOKEN;
+
+      // Use the configuration object to add headers
+      const config = {
+        headers: {
+          'Authorization': `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+        },
+      };
+
+      // Pass the config object with headers as the second argument
+      const response = await this.httpService.post<{ id: number; url: string }[]>(
+        ApiRoutes.Upload,
+        formData,
+        config
+      );
+      
       const uploadedFiles = response.data;
       return uploadedFiles[0]; // Assume the first file is the one uploaded
     } catch (error: any) {
@@ -31,18 +46,28 @@ class UploadService {
           data: jsonData,
         },
       };
-      const response = await this.httpService.post<{ id: number }>(ApiRoutes.Datasets, payload);
+
+      const token = process.env.NEXT_PUBLIC_API_TOKEN;
+
+      // Use the configuration object to add headers
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      // Pass the config object with headers as the second argument
+      const response = await this.httpService.post<{ id: number }>(
+        ApiRoutes.Datasets,
+        payload,
+        config
+      );
       return response.data;
-
-
     } catch (error: any) {
       console.error('Metadata save error:', error.response?.data || error.message);
       throw new Error(`Failed to save metadata: ${error.message}`);
     }
-
   }
 }
-
-
 
 export default UploadService;
