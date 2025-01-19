@@ -76,6 +76,11 @@
       "relation": "manyToMany",
       "target": "api::enrich.enrich",
       "mappedBy": "users_permissions_users"
+    },
+    "credits": {
+      "type": "integer",
+      "default": 0,
+      "min": 0
     }
   }
 }
