@@ -1,4 +1,19 @@
 # Changelog
+
+### January 21, 2025
+
+### Payment Feature
+ 
+**Mihaela (FullStack - Payment Feature)**  
+  - **Database Integration**: Implemented the credits record for users in the database.  
+  - **UI Enhancements**:  
+    - Created an element to display the number of credits.  
+    - Improved several UI elements for better user experience.  
+  - **Credit Purchase**:  
+    - Implemented the option to buy credits and update them in the backend.  
+  - **Credit Usage**:  
+    - Implemented credit subtraction when paying for data enrichment.
+
 ### November 22, 2024
 
 **Dmitry (History and Dataset Management)**  
