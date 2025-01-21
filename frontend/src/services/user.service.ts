@@ -97,6 +97,32 @@ class UserService {
         }
     }
 
+    async getUserCreditsByEmail(email: string): Promise<number | null> {
+        try {
+            const url = `${this.API_URL}users?filters[email][$eq]=${encodeURIComponent(email)}&populate=credits`;
+            console.log("Fetching user credits from URL:", url);
+            
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: this.getHeaders(),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to fetch user credits');
+            }
+    
+            const data = await response.json();
+            if (data && data.length > 0) {
+                return data[0].credits; 
+            } else {
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching user credits:', error);
+            return null;
+        }
+    }
+
     private mapUserData(data: any): User {
         return {
             id: data.id,

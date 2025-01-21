@@ -50,20 +50,37 @@ const MainPageContent = () => {
           Upload datasets related to organizations or people, match columns within the dataset, and enrich the data using AI-driven prompts.
         </Paragraph>
         {session ? (
-          <Link href="/upload">
-            <Button
-              type="primary"
-              size="large"
-              style={{
-                background: '#f0c040',
-                borderColor: '#f0c040',
-                color: 'black',
-                padding: '8px 32px'
-              }}
-            >
-              Enrich
-            </Button>
-          </Link>
+          <>
+            <Link href="/upload">
+              <Button
+                type="primary"
+                size="large"
+                style={{
+                  background: '#f0c040',
+                  borderColor: '#f0c040',
+                  color: 'black',
+                  padding: '8px 32px'
+                }}
+              >
+                Enrich
+              </Button>
+            </Link>
+            <Link href="/credit">
+              <Button
+                type="primary"
+                size="large"
+                style={{
+                  background: '#40c0f0',
+                  borderColor: '#40c0f0',
+                  color: 'black',
+                  padding: '8px 32px',
+                  marginLeft: '16px'
+                }}
+              >
+                Buy Credits
+              </Button>
+            </Link>
+          </>
         ) : (
           <Button
             type="primary"
