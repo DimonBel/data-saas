@@ -81,23 +81,24 @@ const TogetherTable: React.FC = () => {
 
   return (
     <div>
-      <div className={styles.container}>
         {loading ? (
-          <div className={styles.loadingContainer}>
+          <div className="loading-container">
             <Spin size="large" style={{ color: "#BFAFF2" }}/>
           </div>
         ) : (
-          <Table
-            dataSource={dataSource}
-            columns={columns}
-            rowKey="id"
-            pagination={false}
-            scroll={{ y: 250, x: 'max-content' }}
-            bordered={false} // Remove table borders
-            className={styles.table}
-          />
+          <div className={styles.container}>
+            <Table
+              dataSource={dataSource}
+              columns={columns}
+              rowKey="id"
+              pagination={false}
+              scroll={{ y: 250, x: 'max-content' }}
+              bordered={false} // Remove table borders
+              className={styles.table}
+            />
+          </div>
+
         )}
-      </div>
       <Button
         type="primary"
         onClick={handleNextClick}
