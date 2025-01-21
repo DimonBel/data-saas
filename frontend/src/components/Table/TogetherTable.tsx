@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Table, Button, Tooltip } from "antd";
+import { Table, Button, Tooltip, Spin } from "antd";
 import { fetchTogetherData, TogetherData } from "@/services/togetherService";
 import { useRouter } from "next/navigation";
 import styles from "@/style/TogetherTable.module.css";
@@ -44,7 +44,6 @@ const createColumn = (key: string, title: string, width: number = 250) => ({
   },
 });
 
-
 const getColumns = (data: TogetherData[]) =>
   Object.keys(data[0] || {}).map((key: string) => {
     let columnWidth = 250;
@@ -57,16 +56,20 @@ const getColumns = (data: TogetherData[]) =>
 const TogetherTable: React.FC = () => {
   const [dataSource, setDataSource] = useState<TogetherData[]>([]);
   const [columns, setColumns] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);  // Correct state declaration
   const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);  // Set loading state before fetching
       try {
         const data = await fetchTogetherData();
         setDataSource(data);
         setColumns(getColumns(data));
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);  // Turn off loading state after fetching
       }
     };
     fetchData();
@@ -79,27 +82,32 @@ const TogetherTable: React.FC = () => {
   return (
     <div>
       <div className={styles.container}>
-        <Table
-          dataSource={dataSource}
-          columns={columns}
-          rowKey="id"
-          pagination={false}
-          scroll={{ y: 250, x: 'max-content' }}
-          bordered={false} // Remove table borders
-          className={styles.table}
-        />
-
+        {loading ? (
+          <div className={styles.loadingContainer}>
+            <Spin size="large" style={{ color: "#BFAFF2" }}/>
+          </div>
+        ) : (
+          <Table
+            dataSource={dataSource}
+            columns={columns}
+            rowKey="id"
+            pagination={false}
+            scroll={{ y: 250, x: 'max-content' }}
+            bordered={false} // Remove table borders
+            className={styles.table}
+          />
+        )}
       </div>
       <Button
         type="primary"
         onClick={handleNextClick}
         className={styles.nextButton}
         style={{ backgroundColor: "#BFAFF2" }}
+        disabled={loading}  // Disable button while loading
       >
         Next
       </Button>
     </div>
-
   );
 };
 
