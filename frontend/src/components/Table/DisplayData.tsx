@@ -12,6 +12,10 @@ import "@/style/DisplayData.css";
 import { DataItem, ColumnItem } from "@/types/data";
 import { getColumns } from "@/utils/columns";
 import { handleEnrichment } from "@/utils/enrichment";
+import UserService from "@/services/user.service";
+import { useSession } from "next-auth/react";
+import { useCredits } from "../../app/context/CreditsContext";
+
 
 const { Title } = Typography;
 ////------ SAve process 
@@ -24,6 +28,10 @@ const DisplayData: React.FC = () => {
   const [columns, setColumns] = useState<ColumnItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalCost, setTotalCost] = useState<number>(0);
+  const { data: session } = useSession();
+  const [credits, setCredits] = useState<number | null>(null);
+  const { updateCredits, fetchCredits } = useCredits();
+
 
   const router = useRouter();
 
@@ -163,14 +171,84 @@ const DisplayData: React.FC = () => {
       message.error("Please select a column to enrich.");
       return;
     }
+  
     setIsLoading(true);
-    const enrichedData = await handleEnrichment(data, selectedColumn);
-    setData(enrichedData);
-    setColumns(getColumns(enrichedData));
-    setIsLoading(false);
-    message.success("Data enrichment completed successfully!");
-    setSelectedColumn(null);
+  
+    try {
+  
+      if (!session || !session.user?.email) {
+        message.error("User email not found. Please log in.");
+        setIsLoading(false);
+        return;
+      }
+  
+      const userEmail = session.user.email;
+  
+      // Fetch credits
+      const userCredits = await UserService.getUserCreditsByEmail(userEmail);
+  
+      if (userCredits === null) {
+        message.error("Failed to retrieve user credits.");
+        setIsLoading(false);
+        return;
+      }
+  
+      if (userCredits < totalCost) {
+        message.error(`Insufficient credits. You have ${userCredits} credits, but need ${totalCost}.`);
+        setIsLoading(false);
+        return;
+      }
+  
+      const enrichedData = await handleEnrichment(data, selectedColumn);
+  
+      setData(enrichedData);
+      setColumns(getColumns(enrichedData));
+  
+      // Deduct credits and update backend
+      const updatedCredits = userCredits - totalCost;
+  
+      const userId = await UserService.getUserIdByEmail(userEmail);
+  
+      if (!userId) {
+        message.error("Failed to retrieve user ID.");
+        setIsLoading(false);
+        return;
+      }
+  
+      const updateCreditsResponse = await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}users/${userId}`,
+        {
+          credits: updatedCredits,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+  
+      if (updateCreditsResponse.status === 200) {
+        message.success("Data enrichment completed successfully!");
+        updateCredits(updatedCredits);
+      } else {
+        message.error("Failed to update user credits.");
+      }
+    } catch (error) {
+      console.error("Error during enrichment process:", error);
+      message.error("An error occurred during enrichment.");
+    } finally {
+      setIsLoading(false);
+      setSelectedColumn(null);
+    }
   };
+  
+  
+  
+  
+  
+  
 
   return (
     <div>
@@ -180,7 +258,7 @@ const DisplayData: React.FC = () => {
             <Row justify="center" gutter={[24, 24]}>
               {enrichmentColumns.map(col => (
                 <Col key={col.dataIndex}>
-                  <Radio value={col.dataIndex}>{col.title}</Radio>
+                  <Radio value={col.dataIndex} style={{color: "white"}}>{col.title}</Radio>
                 </Col>
               ))}
             </Row>
@@ -207,7 +285,7 @@ const DisplayData: React.FC = () => {
 
       {selectedColumn && (
         <div className="total-cost">
-          <Title level={5}>Total Cost: ${totalCost.toFixed(2)}</Title>
+          <Title level={5} style={{color: 'white'}}>Total Cost: {totalCost} credits</Title>
         </div>
       )}
 
@@ -237,9 +315,10 @@ const DisplayData: React.FC = () => {
             borderRadius: "10px",
             padding: "12px 40px",
             fontSize: "16px",
-            backgroundColor: "#4CAF50",
-            borderColor: "#4CAF50",
+            backgroundColor: selectedColumn ? "#BFAFF2" : "#4e4e4e",
+            borderColor: selectedColumn ? "#BFAFF2" : "#4e4e4e",
             color: "#fff",
+            marginLeft: "10px"
           }}
         >
           Save

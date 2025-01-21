@@ -94,7 +94,7 @@ const CreditPackages: React.FC = () => {
               </Space>
               <Button
                 type="primary"
-                style={{ width: '100%', borderRadius: '4px', marginTop: 'auto' }}
+                style={{ background: '#f0c040', borderColor: '#f0c040', width: '100%', borderRadius: '4px', marginTop: 'auto', color: 'black'}}
                 onClick={() => handlePurchase(pkg)}
               >
                 Purchase
