@@ -180,7 +180,7 @@ const DisplayData: React.FC = () => {
             <Row justify="center" gutter={[24, 24]}>
               {enrichmentColumns.map(col => (
                 <Col key={col.dataIndex}>
-                  <Radio value={col.dataIndex}>{col.title}</Radio>
+                  <Radio value={col.dataIndex} style={{color: "white"}}>{col.title}</Radio>
                 </Col>
               ))}
             </Row>
@@ -207,7 +207,7 @@ const DisplayData: React.FC = () => {
 
       {selectedColumn && (
         <div className="total-cost">
-          <Title level={5}>Total Cost: ${totalCost.toFixed(2)}</Title>
+          <Title level={5} style={{color: 'white'}}>Total Cost: {totalCost} credits</Title>
         </div>
       )}
 
@@ -237,9 +237,10 @@ const DisplayData: React.FC = () => {
             borderRadius: "10px",
             padding: "12px 40px",
             fontSize: "16px",
-            backgroundColor: "#4CAF50",
-            borderColor: "#4CAF50",
+            backgroundColor: selectedColumn ? "#BFAFF2" : "#4e4e4e",
+            borderColor: selectedColumn ? "#BFAFF2" : "#4e4e4e",
             color: "#fff",
+            marginLeft: "10px"
           }}
         >
           Save

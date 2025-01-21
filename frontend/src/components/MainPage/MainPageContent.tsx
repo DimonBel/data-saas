@@ -70,8 +70,8 @@ const MainPageContent = () => {
                 type="primary"
                 size="large"
                 style={{
-                  background: '#40c0f0',
-                  borderColor: '#40c0f0',
+                  background: '#f0c040',
+                  borderColor: '#f0c040',
                   color: 'black',
                   padding: '8px 32px',
                   marginLeft: '16px'

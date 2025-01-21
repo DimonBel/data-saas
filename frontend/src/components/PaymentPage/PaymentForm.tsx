@@ -122,7 +122,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ amount }) => {
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit" loading={loading} className={styles.payButton}>
+        <Button type="primary" htmlType="submit" loading={loading} className={styles.payButton} style={{background: '#f0c040', borderColor: '#f0c040', color: 'black'}}>
           Pay Now
         </Button>
       </Form.Item>
