@@ -14,6 +14,7 @@ import { getColumns } from "@/utils/columns";
 import { handleEnrichment } from "@/utils/enrichment";
 import UserService from "@/services/user.service";
 import { useSession } from "next-auth/react";
+import { useCredits } from "../../app/context/CreditsContext";
 
 
 const { Title } = Typography;
@@ -29,6 +30,7 @@ const DisplayData: React.FC = () => {
   const [totalCost, setTotalCost] = useState<number>(0);
   const { data: session } = useSession();
   const [credits, setCredits] = useState<number | null>(null);
+  const { updateCredits, fetchCredits } = useCredits();
 
 
   const router = useRouter();
@@ -173,7 +175,6 @@ const DisplayData: React.FC = () => {
     setIsLoading(true);
   
     try {
-      console.log("Starting enrichment process...");
   
       if (!session || !session.user?.email) {
         message.error("User email not found. Please log in.");
@@ -182,11 +183,9 @@ const DisplayData: React.FC = () => {
       }
   
       const userEmail = session.user.email;
-      console.log("User email:", userEmail);
   
       // Fetch credits
       const userCredits = await UserService.getUserCreditsByEmail(userEmail);
-      console.log("Current user credits:", userCredits);
   
       if (userCredits === null) {
         message.error("Failed to retrieve user credits.");
@@ -200,19 +199,15 @@ const DisplayData: React.FC = () => {
         return;
       }
   
-      console.log("Enriching data...");
       const enrichedData = await handleEnrichment(data, selectedColumn);
-      console.log("Enriched data:", enrichedData);
   
       setData(enrichedData);
       setColumns(getColumns(enrichedData));
   
       // Deduct credits and update backend
       const updatedCredits = userCredits - totalCost;
-      console.log(`Updating credits from ${userCredits} to ${updatedCredits}`);
   
       const userId = await UserService.getUserIdByEmail(userEmail);
-      console.log("User ID:", userId);
   
       if (!userId) {
         message.error("Failed to retrieve user ID.");
@@ -233,10 +228,10 @@ const DisplayData: React.FC = () => {
         }
       );
   
-      console.log("Backend update response:", updateCreditsResponse.data);
   
       if (updateCreditsResponse.status === 200) {
-        message.success("Data enrichment completed successfully, and credits updated!");
+        message.success("Data enrichment completed successfully!");
+        updateCredits(updatedCredits);
       } else {
         message.error("Failed to update user credits.");
       }

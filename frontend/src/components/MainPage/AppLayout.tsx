@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import { login, logout } from '../../services/authService';
 import UserService from "../../services/user.service"
+import { useCredits } from "../../app/context/CreditsContext";
 
 const { Header, Footer, Content } = Layout;
 const { Title } = Typography;
@@ -14,26 +15,15 @@ interface LayoutProps {
   children: React.ReactNode;
 }
 
+
 const AppLayout: React.FC<LayoutProps> = ({ children }) => {
   const { data: session, status } = useSession();
-  const [credits, setCredits] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const { credits, fetchCredits } = useCredits();
+
+  
 
   useEffect(() => {
-    const fetchCredits = async () => {
-      if (session?.user?.email) {
-        setLoading(true);
-        try {
-          const userCredits = await UserService.getUserCreditsByEmail(session.user.email);
-          setCredits(userCredits);
-        } catch (error) {
-          console.error("Error fetching user credits:", error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
     fetchCredits();
   }, [session]);
 
