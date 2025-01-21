@@ -12,6 +12,9 @@ import "@/style/DisplayData.css";
 import { DataItem, ColumnItem } from "@/types/data";
 import { getColumns } from "@/utils/columns";
 import { handleEnrichment } from "@/utils/enrichment";
+import UserService from "@/services/user.service";
+import { useSession } from "next-auth/react";
+
 
 const { Title } = Typography;
 ////------ SAve process 
@@ -24,6 +27,9 @@ const DisplayData: React.FC = () => {
   const [columns, setColumns] = useState<ColumnItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [totalCost, setTotalCost] = useState<number>(0);
+  const { data: session } = useSession();
+  const [credits, setCredits] = useState<number | null>(null);
+
 
   const router = useRouter();
 
@@ -163,14 +169,91 @@ const DisplayData: React.FC = () => {
       message.error("Please select a column to enrich.");
       return;
     }
+  
     setIsLoading(true);
-    const enrichedData = await handleEnrichment(data, selectedColumn);
-    setData(enrichedData);
-    setColumns(getColumns(enrichedData));
-    setIsLoading(false);
-    message.success("Data enrichment completed successfully!");
-    setSelectedColumn(null);
+  
+    try {
+      console.log("Starting enrichment process...");
+  
+      if (!session || !session.user?.email) {
+        message.error("User email not found. Please log in.");
+        setIsLoading(false);
+        return;
+      }
+  
+      const userEmail = session.user.email;
+      console.log("User email:", userEmail);
+  
+      // Fetch credits
+      const userCredits = await UserService.getUserCreditsByEmail(userEmail);
+      console.log("Current user credits:", userCredits);
+  
+      if (userCredits === null) {
+        message.error("Failed to retrieve user credits.");
+        setIsLoading(false);
+        return;
+      }
+  
+      if (userCredits < totalCost) {
+        message.error(`Insufficient credits. You have ${userCredits} credits, but need ${totalCost}.`);
+        setIsLoading(false);
+        return;
+      }
+  
+      console.log("Enriching data...");
+      const enrichedData = await handleEnrichment(data, selectedColumn);
+      console.log("Enriched data:", enrichedData);
+  
+      setData(enrichedData);
+      setColumns(getColumns(enrichedData));
+  
+      // Deduct credits and update backend
+      const updatedCredits = userCredits - totalCost;
+      console.log(`Updating credits from ${userCredits} to ${updatedCredits}`);
+  
+      const userId = await UserService.getUserIdByEmail(userEmail);
+      console.log("User ID:", userId);
+  
+      if (!userId) {
+        message.error("Failed to retrieve user ID.");
+        setIsLoading(false);
+        return;
+      }
+  
+      const updateCreditsResponse = await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}users/${userId}`,
+        {
+          credits: updatedCredits,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+  
+      console.log("Backend update response:", updateCreditsResponse.data);
+  
+      if (updateCreditsResponse.status === 200) {
+        message.success("Data enrichment completed successfully, and credits updated!");
+      } else {
+        message.error("Failed to update user credits.");
+      }
+    } catch (error) {
+      console.error("Error during enrichment process:", error);
+      message.error("An error occurred during enrichment.");
+    } finally {
+      setIsLoading(false);
+      setSelectedColumn(null);
+    }
   };
+  
+  
+  
+  
+  
+  
 
   return (
     <div>
