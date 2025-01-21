@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Typography, Table, Radio, Row, Col, Button, Card, message, Tooltip } from "antd";
+import { Typography, Table, Radio, Row, Col, Button, Card, message, Tooltip, Spin } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 
@@ -18,7 +18,6 @@ import { useCredits } from "../../app/context/CreditsContext";
 
 
 const { Title } = Typography;
-////------ SAve process 
 
 import axios from "axios";
 
@@ -27,6 +26,7 @@ const DisplayData: React.FC = () => {
   const [data, setData] = useState<DataItem[]>([]);
   const [columns, setColumns] = useState<ColumnItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isFetchingData, setIsFetchingData] = useState(true); // Added for initial data fetch
   const [totalCost, setTotalCost] = useState<number>(0);
   const { data: session } = useSession();
   const [credits, setCredits] = useState<number | null>(null);
@@ -37,12 +37,15 @@ const DisplayData: React.FC = () => {
 
   useEffect(() => {
     const fetchDataAsync = async () => {
+      setIsFetchingData(true); 
       try {
         const fetchedData = await fetchData();
         setData(fetchedData);
         setColumns(getColumns(fetchedData));
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsFetchingData(false);
       }
     };
 
@@ -126,7 +129,7 @@ const DisplayData: React.FC = () => {
             });
             console.log("Successful LinkedIn entry:", response.data);
             return response.data.id;
-          } catch (error) {
+          } catch (error:any) {
             console.error("Error in LinkedIn POST request:", {
               entry,
               serverError: error.response?.data || error.message,
@@ -158,7 +161,7 @@ const DisplayData: React.FC = () => {
 
       console.log("POST request to /enriches successful:", enrichResponse.data);
       message.success("Data saved successfully to all endpoints!");
-    } catch (error) {
+    } catch (error:any) {
       console.error("Error sending POST requests:", error.response?.data || error.message);
       message.error("Failed to save data.");
     }
@@ -252,6 +255,13 @@ const DisplayData: React.FC = () => {
 
   return (
     <div>
+       {isFetchingData ? (
+        <div className="loading-container">
+          <Spin size="large" style={{ color: "#BFAFF2" }}/>
+          <Title level={4} style={{ color: "white", marginTop: "20px" }}>Loading data...</Title>
+        </div>
+      ) : (
+        <>
       {enrichmentColumns.length > 0 ? (
         <Card className="selection-card" bordered={false}>
           <Radio.Group onChange={handleColumnChange} value={selectedColumn}>
@@ -326,6 +336,8 @@ const DisplayData: React.FC = () => {
 
 
       </div>
+      </>
+      )}
     </div>
   );
 };
