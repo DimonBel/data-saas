@@ -8,7 +8,9 @@
   - **Database Integration**: Implemented the credits record for users in the database.  
   - **UI Enhancements**:  
     - Created an element to display the number of credits.  
-    - Improved several UI elements for better user experience.  
+    - Improved several UI elements for better user experience.
+    - Added loading spinner integration for better user feedback.  
+
   - **Credit Purchase**:  
     - Implemented the option to buy credits and update them in the backend.  
   - **Credit Usage**:  
