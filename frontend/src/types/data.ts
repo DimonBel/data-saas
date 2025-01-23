@@ -11,8 +11,23 @@ export type DataItem ={
     value?: string;
     CarrierInfo?: string;
     PhoneType?: string;
+    Phone?: string;
     CountryInfo?: string;
+    LinkedIn?: string;
+    About?: string;
+    Honors?: string;
+    Certifications?: string;
+    Projects?: string;
+    Skills?: string;
+    Experience?: string;
+    Education?: string;
 
+    Company?: string;
+    CompanyDomain?: string;
+    CompanyIndustry?: string;
+    Location?: string;
+    City?: string;
+    Country?: string;
 }
 
 export type ColumnItem ={

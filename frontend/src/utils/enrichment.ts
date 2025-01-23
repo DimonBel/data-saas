@@ -15,7 +15,6 @@ export const handleEnrichment = async (data: DataItem[], selectedColumn: string)
             const apiData = await enrichPhoneData(item.Phone);
             enrichedItem = {
                 ...enrichedItem,
-                PhoneValid: apiData.phone_valid ? "Valid" : "Invalid",
                 CarrierInfo: apiData.carrier || "Unknown Carrier",
                 PhoneType: apiData.phone_type || "Unknown Type",
                 CountryInfo: apiData.country || "Unknown Country",
