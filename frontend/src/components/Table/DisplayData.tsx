@@ -51,6 +51,111 @@ const DisplayData: React.FC = () => {
     setSelectedColumn(e.target.value);
   };
 
+<<<<<<< Updated upstream
+=======
+
+  const handleSaveClick = async () => {
+    if (!data || data.length === 0) {
+      console.error("No data available to save.");
+      return;
+    }
+
+    // Маппинг данных для первого запроса (Phones)
+    const mappedPhones = data.map((item) => {
+      let carrierInfo = 1; // Default to 1 (Moldcell or Unknown Carrier)
+      if (item.CarrierInfo === "Orange") carrierInfo = 2;
+
+      let phoneType = 1; // Default to 1 (Mobile or Unknown)
+      if (item.PhoneType === "fixed_line_or_mobile") phoneType = 2;
+
+      return {
+        carrier_info: carrierInfo,
+        phone_type: phoneType,
+        CountryInfo: item.CountryInfo || "Unknown",
+      };
+    });
+
+    // Маппинг данных для второго запроса (Linkedins)
+    const truncate = (text: string, maxLength: number) =>
+      text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+
+    const mappedLinkedins = data.map((item) => ({
+      About: truncate(item.About || "No Data Available", 500), // Обрезать текст до 500 символов
+      Skills: truncate(item.Skills || "No Data Available", 300),
+      Certification: item.Certifications || "No Data Available",
+      Projects: item.Projects || "No Data Available",
+      Honors: item.Honors || "No Data Available",
+      Experience: item.Experience || "No Data Available",
+      Education: item.Education || "No Data Available",
+      Company: item.Company || "No Data Available",
+      Industry: item.CompanyIndustry || "No Data Available",
+      Location: item.Location || "No Data Available",
+    }));
+    try {
+      // Выполнение первого запроса (Phones)
+      const phoneResponses = await Promise.all(
+        mappedPhones.map(async (entry) => {
+          const response = await axios.post("http://localhost:1337/api/phones", {
+            data: {
+              carier_info: entry.carrier_info,
+              phone_type: entry.phone_type,
+              CountryInfo: entry.CountryInfo,
+            },
+          });
+          return response.data.id; // Возвращаем id
+        })
+      );
+
+      // Выполнение второго запроса (Linkedins)
+      const linkedinResponses = await Promise.all(
+        mappedLinkedins.map(async (entry) => {
+          try {
+            const response = await axios.post("http://localhost:1337/api/linkedins", {
+              data: entry,
+            });
+            console.log("Successful LinkedIn entry:", response.data);
+            return response.data.id;
+          } catch (error) {
+            console.error("Error in LinkedIn POST request:", {
+              entry,
+              serverError: error.response?.data || error.message,
+            });
+            throw error; // Прекращаем выполнение, чтобы устранить ошибку
+          }
+        })
+      );
+
+
+      // Выполнение запроса на /enriches
+      const enrichPayload = {
+        data: {
+          linkedins: [1], // IDs LinkedIn
+          phones: [1],      // IDs Phones
+          users_permissions_users: [2], // Placeholder для пользователей
+        },
+      };
+
+
+      console.log({
+        linkedins: [linkedinResponses], // ID успешного создания LinkedIn
+        phones: [phoneResponses],       // ID телефона, // ID пользователя
+      });
+
+      console.log("Sending data to /enriches:", enrichPayload);
+
+      const enrichResponse = await axios.post("http://localhost:1337/api/enriches?populate=*", enrichPayload);
+
+      console.log("POST request to /enriches successful:", enrichResponse.data);
+      message.success("Data saved successfully to all endpoints!");
+    } catch (error) {
+      console.error("Error sending POST requests:", error.response?.data || error.message);
+      message.error("Failed to save data.");
+    }
+  };
+
+
+  console.log(data)
+>>>>>>> Stashed changes
   const handleEnrichClick = async () => {
     if (!selectedColumn) {
       message.error("Please select a column to enrich.");

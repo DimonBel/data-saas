@@ -17,6 +17,19 @@
   }
   
   .file-list-item:hover {
-    background-color: #4e4e4e; /* Hover effect for better interaction */
+    background-color: #4e4e4e;
+  }
+  .ant-upload-list-item-name {
+    color: #e5e7eb !important; 
+  }
+  .ant-upload-list-item-name svg {
+    fill: #e5e7eb !important; 
+  }
+  
+  .ant-btn-icon svg {
+    fill: #e5e7eb !important; 
+  }
+  .ant-upload-icon .anticon-paper-clip svg {
+    fill: #e5e7eb !important; 
   }
   
