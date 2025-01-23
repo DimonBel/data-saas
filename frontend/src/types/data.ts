@@ -6,9 +6,9 @@ export type DataItem ={
     // LinkedIn?: string;
     // [key: string]: any; // To accommodate dynamic fields like Enriched data
 
-    id: number;
-    name: string;
-    value: string;
+    id?: number;
+    name?: string;
+    value?: string;
     CarrierInfo?: string;
     PhoneType?: string;
     CountryInfo?: string;
@@ -16,7 +16,7 @@ export type DataItem ={
 }
 
 export type ColumnItem ={
-    title: React.ReactNode;
+    title: string;
     dataIndex: string;
     key: string;
     width?: number;

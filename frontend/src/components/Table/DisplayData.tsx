@@ -31,9 +31,9 @@ const { Title } = Typography;
 
 type TogetherData = { name: string; value: string }; // Example structure
 type DataItem = {
-  id: number;
-  name: string;
-  value: string;
+  id?: number;
+  name?: string;
+  value?: string;
   CarrierInfo?: string;
   PhoneType?: string;
   CountryInfo?: string;
