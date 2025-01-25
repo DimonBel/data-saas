@@ -1,43 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import { Layout, Card, Avatar, Typography, List, Button, Space, message } from 'antd';
 import { UserOutlined, DownloadOutlined } from '@ant-design/icons';
-import { fetchDatasets, getFileUrl, Dataset } from '@/services/historyService';
 import { useSession } from 'next-auth/react';
 import { signIn } from 'next-auth/react';
+import { getMediaLibraryFiles, getFileUrl } from '@/services/mediaService'; 
 
 const { Content } = Layout;
 const { Title, Text } = Typography;
 
 const ProfilePage: React.FC = () => {
   const { data: session, status } = useSession();
-  const [datasets, setDatasets] = useState<Dataset[]>([]);
+  const [files, setFiles] = useState<any[]>([]); 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadDatasets = async () => {
+    const loadFiles = async () => {
       try {
-        const fetchedDatasets = await fetchDatasets();
-        setDatasets(fetchedDatasets);
+        const fetchedFiles = await getMediaLibraryFiles();
+        const fileNames = fetchedFiles.map((file: any) => ({
+          id: file.id,
+          name: file.name,
+        }));
+        setFiles(fileNames);
       } catch (error) {
-        message.error('Failed to load datasets');
+        message.error('Failed to load files');
       } finally {
         setLoading(false);
       }
     };
 
-    loadDatasets();
+    loadFiles();
   }, []);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: true
-    });
+  const handleDownload = async (fileId: number) => {
+    try {
+      const fileUrl = await getFileUrl(fileId.toString());
+      if (fileUrl) {
+        const link = document.createElement('a');
+        link.href = `http://localhost:1337${fileUrl}`;
+        link.download = '';
+        link.click();
+      } else {
+        message.error('Failed to get file URL');
+      }
+    } catch (error) {
+      message.error('Failed to open file');
+    }
   };
 
   if (status === 'loading') return <p>Loading...</p>;
@@ -69,37 +77,27 @@ const ProfilePage: React.FC = () => {
 
             <Card
               style={{ width: '100%', background: '#363636', border: 'none' }}
-              title={<Text strong style={{ color: 'white', fontSize: '18px' }}>Upload History</Text>}
+              title={<Text strong style={{ color: 'white', fontSize: '18px' }}>Media Library</Text>}
             >
               <List
                 loading={loading}
-                dataSource={datasets}
+                dataSource={files}
                 renderItem={(item) => (
                   <List.Item style={{ borderBottom: '1px solid #424242' }}>
                     <List.Item.Meta
                       avatar={<Avatar icon={<UserOutlined />} style={{ backgroundColor: '#f0c040' }} />}
-                      title={<Text style={{ color: 'white' }}>{item.attributes.name}</Text>}
+                      title={<Text style={{ color: 'white' }}>{item.name}</Text>}
                       description={
                         <Space direction="vertical">
-                          <Text style={{ color: '#bfbfbf' }}>Uploaded: {formatDate(item.attributes.createdAt)}</Text>
                           <Space>
                             <Button
                               icon={<DownloadOutlined />}
                               size="small"
-                              onClick={() => item.attributes.originalFile && window.open(getFileUrl(item.attributes.originalFile)!)}
-                              disabled={!item.attributes.originalFile}
-                              style={{ color: 'white' }}
+                              onClick={() => handleDownload(item.id)}
+                              disabled={!item.id}
+                              style={{ color: 'grey', backgroundColor: 'black' }}
                             >
-                              Original
-                            </Button>
-                            <Button
-                              icon={<DownloadOutlined />}
-                              size="small"
-                              onClick={() => item.attributes.enrichedFile && window.open(getFileUrl(item.attributes.enrichedFile)!)}
-                              disabled={!item.attributes.enrichedFile}
-                              style={{ color: 'white' }}
-                            >
-                              Enriched
+                              Download
                             </Button>
                           </Space>
                         </Space>
