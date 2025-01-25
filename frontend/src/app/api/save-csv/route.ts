@@ -32,10 +32,16 @@ export async function POST(request: Request) {
             strapiResponse: strapiResponse.data
         }, { status: 200 });
     } catch (error) {
-        console.error('Error saving CSV:', error.response ? error.response.data : error.message);
-        return NextResponse.json({
-            message: 'Error saving CSV file',
-            error: error.response ? error.response.data : (error as Error).message
-        }, { status: 500 });
+        if (error instanceof Error) {
+            console.error('Error saving CSV:', (error as any)?.response?.data || error.message);
+            return NextResponse.json({
+                message: 'Error saving CSV file',
+            }, { status: 500 });
+        } else {
+            console.error('Unknown error:', error);
+            return NextResponse.json({
+                message: 'Unknown error occurred',
+            }, { status: 500 });
+        }
     }
 }

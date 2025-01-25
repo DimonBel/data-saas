@@ -3,13 +3,7 @@ import { Tooltip } from "antd";
 import React from "react";
 
 export const createColumn = (key: string, title: string, width = 250): ColumnItem => ({
-    title: (
-        <Tooltip title={title} >
-            <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "120px" }}>
-                {title}
-            </span>
-        </Tooltip>
-    ),
+    title: title,
     dataIndex: key,
     key,
     width,
@@ -29,7 +23,7 @@ export const getColumns = (data: any[]): ColumnItem[] => {
     if (!data || data.length === 0) {
         return [];
     }
-    return Object.keys(data[0]).map((key) =>
+    return Object.keys(data).map((key) =>
         createColumn(key, key, key === "Name" || key === "Email" || key === "Phone" ? 200 : 250)
     );
 };
