@@ -3,6 +3,8 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { Session } from "inspector/promises";
 import { auth } from "@/auth"
+import { CreditsProvider } from "../app/context/CreditsContext";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +24,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <SessionProvider session={session}>
-        <body className={inter.className}>{children}</body>
+        <CreditsProvider>
+          <body className={inter.className}>{children}</body>
+        </CreditsProvider>
       </SessionProvider>
     </html>
   );
