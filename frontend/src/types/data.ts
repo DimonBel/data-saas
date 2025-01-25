@@ -1,5 +1,5 @@
 export interface DataItem {
-    id: string;
+    id?: string;
     Name?: string;
     Email?: string;
     Phone?: string;
@@ -8,14 +8,14 @@ export interface DataItem {
 }
 
 export interface ColumnItem {
-    title: React.ReactNode;
-    dataIndex: string;
-    key: string;
+    title?: React.ReactNode;
+    dataIndex?: string;
+    key?: string;
     width?: number;
     render?: (text: any) => React.ReactNode;
 }
 export interface TogetherData {
-    id: string | number;
+    id?: string | number;
     Name?: string;
     Email?: string;
     Phone?: string;
