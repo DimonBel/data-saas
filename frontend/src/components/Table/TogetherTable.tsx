@@ -86,6 +86,7 @@ const TogetherTable: React.FC = () => {
             <Spin size="large" style={{ color: "#BFAFF2" }}/>
           </div>
         ) : (
+          <div>
           <div className={styles.container}>
             <Table
               dataSource={dataSource}
@@ -97,17 +98,18 @@ const TogetherTable: React.FC = () => {
               className={styles.table}
             />
           </div>
-
+            <Button
+              type="primary"
+              onClick={handleNextClick}
+              className={styles.nextButton}
+              style={{ backgroundColor: "#BFAFF2" }}
+              disabled={loading}  // Disable button while loading
+            >
+              Next
+            </Button> 
+         </div> 
         )}
-      <Button
-        type="primary"
-        onClick={handleNextClick}
-        className={styles.nextButton}
-        style={{ backgroundColor: "#BFAFF2" }}
-        disabled={loading}  // Disable button while loading
-      >
-        Next
-      </Button>
+      
     </div>
   );
 };
