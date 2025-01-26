@@ -12,6 +12,10 @@ import { getColumns } from "@/utils/columns";
 import { handleEnrichment } from "@/utils/enrichment";
 import axios from "axios";
 
+import UserService from "@/services/user.service";
+import { useSession } from "next-auth/react";
+import { useCredits } from "../../app/context/CreditsContext";
+
 const { Title } = Typography;
 
 const DisplayData: React.FC = () => {
@@ -21,6 +25,10 @@ const DisplayData: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [totalCost, setTotalCost] = useState<number>(0);
   const router = useRouter();
+
+  const { data: session } = useSession();
+  const [credits, setCredits] = useState<number | null>(null);
+  const { updateCredits, fetchCredits } = useCredits();
 
   useEffect(() => {
     const fetchDataAsync = async () => {
@@ -80,6 +88,77 @@ const DisplayData: React.FC = () => {
       return;
     }
     setIsLoading(true);
+
+    try {
+
+      if (!session || !session.user?.email) {
+        message.error("User email not found. Please log in.");
+        setIsLoading(false);
+        return;
+      }
+
+      const userEmail = session.user.email;
+
+      // Fetch credits
+      const userCredits = await UserService.getUserCreditsByEmail(userEmail);
+
+      if (userCredits === null) {
+        message.error("Failed to retrieve user credits.");
+        setIsLoading(false);
+        return;
+      }
+
+      if (userCredits < totalCost) {
+        message.error(`Insufficient credits. You have ${userCredits} credits, but need ${totalCost}.`);
+        setIsLoading(false);
+        return;
+      }
+
+      const enrichedData = await handleEnrichment(data, selectedColumn);
+
+      setData(enrichedData);
+      setColumns(getColumns(enrichedData));
+
+      // Deduct credits and update backend
+      const updatedCredits = userCredits - totalCost;
+
+      const userId = await UserService.getUserIdByEmail(userEmail);
+
+      if (!userId) {
+        message.error("Failed to retrieve user ID.");
+        setIsLoading(false);
+        return;
+      }
+
+      const updateCreditsResponse = await axios.put(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}users/${userId}`,
+        {
+          credits: updatedCredits,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_API_TOKEN}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+
+      if (updateCreditsResponse.status === 200) {
+        message.success("Data enrichment completed successfully!");
+        updateCredits(updatedCredits);
+      } else {
+        message.error("Failed to update user credits.");
+      }
+    } catch (error) {
+      console.error("Error during enrichment process:", error);
+      message.error("An error occurred during enrichment.");
+    } finally {
+      setIsLoading(false);
+      setSelectedColumn(null);
+    }
+
+
     const enrichedData = await handleEnrichment(data, selectedColumn);
     setData(enrichedData);
     setColumns(getColumns(enrichedData));
