@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Typography, Table, Radio, Row, Col, Button, Card, message, Tooltip } from "antd";
+import { Typography, Table, Radio, Row, Col, Button, Card, message, Tooltip, Spin } from "antd";
 import { CheckOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import { fetchData } from "@/services/fetchDataService";
@@ -22,7 +22,7 @@ const DisplayData: React.FC = () => {
   const [selectedColumn, setSelectedColumn] = useState<string | null>(null);
   const [data, setData] = useState<DataItem[]>([]); 
   const [columns, setColumns] = useState<ColumnItem[]>([]); 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [totalCost, setTotalCost] = useState<number>(0);
   const router = useRouter();
 
@@ -32,12 +32,15 @@ const DisplayData: React.FC = () => {
 
   useEffect(() => {
     const fetchDataAsync = async () => {
+      setIsLoading(true);
       try {
         const fetchedData = await fetchData();
         setData(fetchedData);
         setColumns(getColumns(fetchedData));
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchDataAsync();
@@ -109,7 +112,7 @@ const DisplayData: React.FC = () => {
       }
 
       if (userCredits < totalCost) {
-        message.error(`Insufficient credits. You have ${userCredits} credits, but need ${totalCost}.`);
+        message.error(`Insufficient credits. You have ${userCredits} credits, but need {totalCost} credits.`);
         setIsLoading(false);
         return;
       }
@@ -169,13 +172,19 @@ const DisplayData: React.FC = () => {
 
   return (
     <div>
+      {isLoading ? (
+        <div className="loading-container">
+          <Spin size="large" style={{ color: "#BFAFF2" }} />
+        </div>
+      ) : (
+      <>
       {enrichmentColumns.length > 0 ? (
         <Card className="selection-card" bordered={false}>
           <Radio.Group onChange={handleColumnChange} value={selectedColumn}>
             <Row justify="center" gutter={[24, 24]}>
               {enrichmentColumns.map(col => (
                 <Col key={col.dataIndex}>
-                  <Radio value={col.dataIndex}>{col.title}</Radio>
+                  <Radio value={col.dataIndex} style={{color:"white"}}>{col.title}</Radio>
                 </Col>
               ))}
             </Row>
@@ -202,7 +211,7 @@ const DisplayData: React.FC = () => {
 
       {selectedColumn && (
         <div className="total-cost">
-          <Title level={5}>Total Cost: ${totalCost.toFixed(2)}</Title>
+          <Title level={5} style={{color:"white"}}>Total Cost: {totalCost} credits</Title>
         </div>
       )}
 
@@ -232,14 +241,18 @@ const DisplayData: React.FC = () => {
             borderRadius: "10px",
             padding: "12px 40px",
             fontSize: "16px",
-            backgroundColor: "#4CAF50",
-            borderColor: "#4CAF50",
+            backgroundColor: "#BFAFF2",
+            borderColor: "#BFAFF2",
             color: "#fff",
+            marginLeft: "20px"
           }}
+          disabled={false}
         >
           Save
         </Button>
       </div>
+      </>
+      )}
     </div>
   );
 };
